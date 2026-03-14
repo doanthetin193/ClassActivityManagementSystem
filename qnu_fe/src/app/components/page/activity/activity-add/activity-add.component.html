@@ -1,0 +1,82 @@
+<div class="rounded-4 w-100 h-100" style="position: relative">
+    <div class="loading-overlay" *ngIf="isLoading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">{{'LOADING' | translate}}</span>
+        </div>
+      </div>
+    <div class="d-flex align-items-center h-10 mb-2">
+        <div *ngIf="isActive('activity/add')" class="fs-4 fw-bold mb-2">
+            {{ 'ACTIVITY' | translate }}
+        </div>
+        <div *ngIf="!isActive('activity/add')" class="fs-4 fw-bold mb-2">
+            {{ 'GUIDE' | translate }}
+        </div>
+        <div class="mx-2 mb-2">
+            <img src="assets/icons/arrow.svg" alt="Arrow" />
+        </div>
+        <div class="fs-4 mb-2 fw-bold" *ngIf="isActive('/activity/add')">{{'ADD_ACTIVITY' | translate}}</div>
+        <div class="fs-4 mb-2 fw-bold" *ngIf="isActive('/activity-guide/add')">{{'ADD_GUIDE' | translate}}</div>
+        <div class="fs-4 mb-2 fw-bold" *ngIf="isActive('/department-guide/add')">{{'ADD_DEPARTMENT_GUIDE' | translate}}</div>
+    </div>
+    <div class="card me-4">
+        <p-toast></p-toast>
+        <!-- Bootstrap Progress Bar -->
+        <div class="progress w-100 my-3" style="height: 1rem;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                 role="progressbar"
+                 [attr.aria-valuenow]="totalSizePercent"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 [ngStyle]="{'width.%': totalSizePercent > 100 ? 100 : totalSizePercent}"
+                 [ngClass]="{'bg-danger': totalSizePercent > 100, 'bg-success': totalSizePercent <= 100}">
+            </div>
+            <span class="ms-2">{{ formatSize(totalSize) }} / 200Mb</span>
+        </div>
+        <p-fileUpload #fileUpload 
+                     name="myfile[]" 
+                     [multiple]="true" 
+                     accept="application/pdf" 
+                     maxFileSize="100000000" 
+                     [auto]="false" 
+                     (onSelect)="onSelectedFiles($event)" 
+                     (onRemove)="handleFileRemove($event)">
+        
+            <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback">
+                <div class="d-flex flex-wrap justify-content-between align-items-center flex-1 gap-2">
+                    <div class="d-flex gap-2">
+                        <!-- Nút chọn file -->
+                        <p-button (onClick)="choose($event, chooseCallback)" 
+                                  icon="pi pi-folder-open" 
+                                  [outlined]="true">
+                        </p-button>
+                        <!-- Nút upload file -->
+                        <p-button pTooltip="This button can create activity. Please choose activity guide." 
+                                  (onClick)="uploadFiles()" 
+                                  icon="pi pi-cloud-upload" 
+                                  [rounded]="true" 
+                                  [outlined]="true" 
+                                  severity="success" 
+                                  [disabled]="!files || files.length === 0">
+                        </p-button>
+                        <!-- Nút xóa file -->
+                        <p-button (onClick)="clearFiles(clearCallback)" 
+                                  icon="pi pi-times" 
+                                  [rounded]="true" 
+                                  [outlined]="true" 
+                                  severity="danger" 
+                                  [disabled]="!files || files.length === 0">
+                        </p-button>
+                    </div>
+                </div>
+            </ng-template>
+            
+            <ng-template pTemplate="empty">
+                <div class="d-flex w-100 align-items-center justify-content-center flex-column">
+                    <i class="pi pi-cloud-upload border border-1 rounded-circle fs-1 p-5"></i>
+                    <p class="mt-4 mb-0" *ngIf="isActive('activity/add')">{{'DRAG_DROP_NEW_ACTIVITY' | translate}}</p>
+                    <p class="mt-4 mb-0" *ngIf="!isActive('activity/add')">{{'DRAG_DROP_NEW_GUIDE' | translate}}</p>
+                </div>
+            </ng-template>
+        </p-fileUpload>
+    </div>
+</div>

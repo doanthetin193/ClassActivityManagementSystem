@@ -1,0 +1,14 @@
+jwt:
+  signerKey: "EIG2ryG3InsGo7mStNgivMrw2/OpHD4UrBJUPwkSWacWJaEztRuqsr/axSiuCTxZ"
+
+cloudinary:
+  cloud_name: djpmekvyd
+  api_key: 486573992241243
+  api_secret: LYzIUMOY4JIpbjHZgJB5seZUTSk
+
+local:
+  storage:
+    path: "D:\\file_activity_repo"
+
+server:
+  host: "http://localhost:8000/AMQNU/api"

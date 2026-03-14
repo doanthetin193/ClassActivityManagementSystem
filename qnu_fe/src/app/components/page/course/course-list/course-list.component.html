@@ -1,0 +1,110 @@
+<div class="rounded-4 w-100 h-100" style="position: relative">
+  <div class="fs-4 fw-bold mb-2">{{"BATCH" | translate}}</div>
+  <div class="mb-2 d-flex justify-content-between">
+    <div class="col-md-5">
+      <app-search-input
+        [placeholder]="'SEARCH' | translate"
+        (search)="onKeywordChange($event)"
+      ></app-search-input>
+    </div>
+
+    <div>
+      <button
+        type="button"
+        class="me-2 btn btn-primary"
+        data-bs-toggle="modal"
+        *ngIf="(authService.checkPermissions('CREATE_COURSE'))"
+        data-bs-target="#csvUploadModal"
+      >
+        {{"ADD_BY_XLSX" | translate}}
+      </button>
+      <button
+        type="button"
+        *ngIf="(authService.checkPermissions('CREATE_COURSE'))"
+        class="btn btn-primary me-4"
+        (click)="navigateToAdd()"
+      >
+        {{"ADD_BATCH" | translate}}
+      </button>
+    </div>
+  </div>
+  <div class="rounded-4 me-4" style="overflow: hidden; height: 400px">
+    <div class="table-responsive mh-75" style="overflow-y: auto">
+      <table class="table table-hover table-borderless align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>{{"BATCH_NAME" | translate}}</th>
+            <th>{{"START_YEAR" | translate}}</th>
+            <th>{{"END_YEAR" | translate}}</th>
+            <th>{{"CREATE_AT" | translate}}</th>
+            <th>{{"UPDATE_AT" | translate}}</th>
+            <th>{{"ACTION" | translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of courses">
+            <td>{{ course.id }}</td>
+            <td>{{ course.name }}</td>
+            <td>{{ course.startYear }}</td>
+            <td>{{ course.endYear }}</td>
+            <td>{{ course.createdAt | date : "MM/dd/yyyy" }}</td>
+            <td>{{ course.updatedAt | date : "MM/dd/yyyy" }}</td>
+            <td>
+              <div class="d-flex">
+                                       
+                <div
+                  class="me-2 cursor-pointer"
+                  *ngIf="(authService.checkPermissions('UPDATE_COURSE'))"
+                  (click)="navigateToEdit(course.id)"
+                >
+                <img src="assets/icons/pen.svg" alt="Arrow" />
+                </div>
+                <div
+                  class="cursor-pointer"
+                  data-bs-toggle="modal"
+                  *ngIf="(authService.checkPermissions('DELETE_COURSE'))"
+                  (click)="openDeleteModal(course.id)"
+                >
+                <img src="assets/icons/bin.svg" alt="Arrow" />
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div
+    class="pagination-container d-flex w-100 justify-content-between"
+    style="position: absolute; bottom: 0; padding: 10px 10px 0 0"
+  >
+    <div class="d-flex align-items-center">
+      {{"TOTAL_RECORD_COUNT" | translate}}: {{ totalRecords }}
+    </div>
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [rows]="rows"
+      [first]="first"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[7, 10, 30, 50]"
+    />
+  </div>
+</div>
+
+<app-confirm-delete-modal
+  modalId="deleteModal"
+  [title]="'CONFIRM_DELETE' | translate"
+  [message]="'DELETE_ITEM' | translate"
+  [itemId]="itemIdToDelete"
+  [deleteFn]="deleteCourse"  
+  (done)="loadCourses({ page: page, rows: rows })">
+</app-confirm-delete-modal>
+
+<app-upload-modal
+  modalId="csvUploadModal"
+  [title]="'UPLOAD_FILE_FOR_BATCH' | translate"
+  [templateUrl]="'http://localhost:8000/AMQNU/api/courses/download-template'"
+  [uploadFn]="uploadCourse"
+  (finished)="loadCourses({ page: page, rows: rows })">
+</app-upload-modal>

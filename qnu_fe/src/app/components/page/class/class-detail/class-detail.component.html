@@ -1,0 +1,123 @@
+<div class="rounded-4 w-100 h-100" style="position: relative">
+    <div class="d-flex align-items-center mb-2">
+      <div class="fs-4 fw-bold">
+        {{"CLASS" | translate}}
+      </div>
+      <div class="mx-2">
+        <img src="assets/icons/arrow.svg" alt="Arrow" />
+      </div>
+      <div class="fs-4 fw-bold">
+        {{"CLASS_DETAIL" | translate}}
+      </div>
+      <div class="mx-2">
+        <img src="assets/icons/arrow.svg" alt="Arrow" />
+      </div>
+      <div class="fs-4 fw-bold">
+        {{classDetail?.name}}
+      </div>
+    </div>
+    <div class="mb-2 me-4 d-flex justify-content-between">
+      <div class="col-md-5">
+          <div class="input-group">
+              <input class="form-control border" #searchInput style="border-radius:  0.375rem;" type="search" placeholder="Search">
+              <span class="input-group-append">
+                  <button class="btn hvnone btn-outline-secondary bg-white border-start-0 border ms-n5" style="border-radius: 0 0.375rem 0.375rem 0; transform: translateX(-97%);" type="button">
+                    <i class="bi bi-search"></i>
+                  </button>
+              </span>
+          </div>
+      </div>
+  
+      <div class="d-flex">
+        <button
+        *ngIf="isActive('/my-class')"
+          type="button"
+          (click)="navigateClassAcvivity()"
+          class="btn me-2 btn-outline-primary"
+        >
+        {{ "VIEW_ACTIVITY" | translate }}
+        </button>
+        
+        <button type="button" *ngIf="!isActive('/my-class')" class="me-2 btn btn-primary" data-bs-toggle="modal" data-bs-target="#csvUploadModal">
+          {{"ADD_BY_XLSX" | translate}}
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary me-4"
+          *ngIf="!isActive('/my-class')"
+          (click)="navigateAddStudent()"
+        >
+          {{"ADD_STUDENT" | translate}}
+        </button>
+      </div>
+  </div>
+    <div class="rounded-4 me-4" style="overflow: hidden; height: 400px;">
+      <div class="table-responsive mh-75" style="overflow-y: auto">
+        <table
+          class="table table-hover table-borderless align-middle"
+        >
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>{{"NAME" | translate}}</th>
+              <th>{{"GENDER" | translate}}</th>
+              <th>Email</th>
+              <th>{{"BIRTH_DAY" | translate}}</th>
+              <th>{{"POSITION" | translate}}</th>
+              <th>{{"STUDENT_CODE" | translate}}</th>
+              <th *ngIf="!isRoleStudent()">{{"ACTION" | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let studentOfClass of classDetail?.studentOfClass">
+              <td>{{ studentOfClass.id }}</td>
+              <td>{{ studentOfClass.name }}</td>
+              <td>{{ studentOfClass.gender }}</td>
+              <td>{{ studentOfClass.email }}</td>
+              <td>{{ studentOfClass.birthDate }}</td>
+              <td>{{ studentOfClass.studentPosition}}</td>
+              <td>{{ studentOfClass.studentCode }}</td>
+              <td *ngIf="!isRoleStudent()">
+                <div class="d-flex">
+                  <div
+                    class="me-2 cursor-pointer" 
+                  >
+                    <img src="assets/icons/eye.svg" alt="eye" />
+                  </div>
+                  <div class="me-2 cursor-pointer"
+                  (click)="editStudent(studentOfClass.id)" 
+                  >
+                    <img src="assets/icons/pen.svg" alt="pen" />
+                  </div>
+                  <div
+                    class="cursor-pointer"
+                    data-bs-toggle="modal"
+                  >
+                    <img src="assets/icons/bin.svg" alt="bin" />
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div
+      class="pagination-container d-flex w-100 justify-content-between"
+      style="position: absolute; bottom: 0; padding: 10px 10px 0 0 "
+    >
+    <div class="d-flex align-items-center">
+      {{"TOTAL_RECORD_COUNT" | translate}}: {{ totalRecords }}
+    </div>
+    <p-paginator 
+    (onPageChange)="onPageChange($event)" 
+    [rows]="rows" 
+    [first]="first"
+    [totalRecords]="totalRecords" 
+    [rowsPerPageOptions]="[7,10]"
+    />
+    </div>
+  </div>
+
+  
+  

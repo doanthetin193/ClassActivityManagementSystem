@@ -1,0 +1,177 @@
+<div class="rounded-4 w-100 h-100" style="position: relative">
+  <div class="fs-4 fw-bold mb-2">{{'ACCOUNT_MANAGEMENT' | translate}}</div>
+
+  <!-- Search + Filter bar -->
+  <div class="mb-2 d-flex justify-content-between align-items-center">
+    <div class="col-md-4">
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          [placeholder]="'SEARCH_USERNAME' | translate"
+          [(ngModel)]="searchKeyword"
+          (input)="onSearch(searchKeyword)"
+        />
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 align-items-center">
+      <!-- Type filter -->
+      <select class="form-select" [(ngModel)]="selectedType" (change)="applyFilter()" style="width: 160px">
+        <option *ngFor="let opt of typeOptions" [value]="opt.value">{{ opt.label | translate }}</option>
+      </select>
+      <!-- Status filter -->
+      <select class="form-select" [(ngModel)]="selectedStatus" (change)="applyFilter()" style="width: 150px">
+        <option *ngFor="let opt of statusOptions" [value]="opt.value">{{ opt.label | translate }}</option>
+      </select>
+      <button class="btn btn-outline-secondary" (click)="clearFilter()">
+        <i class="bi bi-x-circle me-1"></i> {{'CLEAR_FILTER' | translate}}
+      </button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="rounded-4" style="overflow: hidden; height: 420px">
+    <div class="table-responsive" style="overflow-y: auto; height: 100%">
+      <table class="table table-hover table-borderless align-middle">
+        <thead class="table-light sticky-top">
+          <tr>
+            <th>ID</th>
+            <th>{{'USERNAME' | translate}}</th>
+            <th>{{'TYPE' | translate}}</th>
+            <th>{{'LINKED_NAME' | translate}}</th>
+            <th>{{'LINKED_ROLE' | translate}}</th>
+            <th>{{'STATUS' | translate}}</th>
+            <th>{{'CREATE_AT' | translate}}</th>
+            <th>{{'ACTION' | translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let acc of accounts">
+            <td>{{ acc.id }}</td>
+            <td>{{ acc.username }}</td>
+            <td>
+              <span class="badge"
+                [ngClass]="{
+                  'bg-danger': acc.type === 'SUPERADMIN',
+                  'bg-primary': acc.type === 'DEPARTMENT',
+                  'bg-success': acc.type === 'STUDENT'
+                }">
+                {{ acc.type }}
+              </span>
+            </td>
+            <td>{{ acc.linkedName }}</td>
+            <td>{{ acc.linkedRole }}</td>
+            <td>
+              <span class="badge" [ngClass]="acc.isDeleted ? 'bg-secondary' : 'bg-success'">
+                {{ acc.isDeleted ? ('ACCOUNT_LOCKED' | translate) : ('ACCOUNT_ACTIVE' | translate) }}
+              </span>
+            </td>
+            <td>{{ acc.createdAt | date: 'dd/MM/yyyy' }}</td>
+            <td>
+              <div class="d-flex gap-2">
+                <!-- Reset password -->
+                <button
+                  class="btn btn-sm btn-outline-warning"
+                  [title]="'RESET_PASSWORD' | translate"
+                  (click)="openResetModal(acc)"
+                >
+                  <i class="bi bi-key-fill"></i>
+                </button>
+                <!-- Lock -->
+                <button
+                  *ngIf="!acc.isDeleted && acc.username !== currentUsername"
+                  class="btn btn-sm btn-outline-danger"
+                  [title]="'LOCK_ACCOUNT' | translate"
+                  (click)="openConfirmModal(acc, 'lock')"
+                >
+                  <i class="bi bi-lock-fill"></i>
+                </button>
+                <!-- Unlock -->
+                <button
+                  *ngIf="acc.isDeleted"
+                  class="btn btn-sm btn-outline-success"
+                  [title]="'UNLOCK_ACCOUNT' | translate"
+                  (click)="openConfirmModal(acc, 'unlock')"
+                >
+                  <i class="bi bi-unlock-fill"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="accounts.length === 0">
+            <td colspan="8" class="text-center text-muted py-4">{{'NO_DATA' | translate}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Paginator -->
+  <p-paginator
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [first]="first"
+    [rowsPerPageOptions]="[10, 20, 50]"
+    (onPageChange)="onPageChange($event)"
+  ></p-paginator>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- Modal: Reset Password                     -->
+<!-- ══════════════════════════════════════════ -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{'RESET_PASSWORD' | translate}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          {{'ACCOUNT_LABEL' | translate}}: <strong>{{ selectedAccount?.username }}</strong>
+        </p>
+        <div class="mb-3">
+          <label class="form-label">{{'NEW_PASSWORD' | translate}} <span class="text-muted">({{'RESET_PASSWORD_HINT' | translate}})</span></label>
+          <input type="text" class="form-control" [(ngModel)]="newPassword" [placeholder]="'NEW_PASSWORD' | translate" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'CANCEL' | translate}}</button>
+        <button type="button" class="btn btn-warning" (click)="confirmResetPassword()">{{'CONFIRM' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- Modal: Confirm Lock / Unlock              -->
+<!-- ══════════════════════════════════════════ -->
+<div class="modal fade" id="confirmActionModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ (actionType === 'lock' ? 'LOCK_ACCOUNT' : 'UNLOCK_ACCOUNT') | translate }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        {{ (actionType === 'lock' ? 'LOCK_CONFIRM_TEXT' : 'UNLOCK_CONFIRM_TEXT') | translate }}
+        <strong>{{ actionTarget?.username }}</strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'CANCEL' | translate}}</button>
+        <button
+          type="button"
+          class="btn"
+          [ngClass]="actionType === 'lock' ? 'btn-danger' : 'btn-success'"
+          (click)="confirmAction()"
+        >
+          {{'CONFIRM' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

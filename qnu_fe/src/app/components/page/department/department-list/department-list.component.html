@@ -1,0 +1,146 @@
+<div class="rounded-4 w-100 h-100 d-flex flex-column" style="position: relative">
+  <div class="h-20 w-100">
+  <div class="fs-4 fw-bold mb-2">{{ "DEPARTMENT" | translate }}</div>
+  
+  <div class="mb-2 d-flex flex-column flex-md-row justify-content-between">
+    <div class="col-12 col-md-5">
+      <app-search-input
+      [placeholder]="'SEARCH' | translate"
+      (search)="onKeywordChange($event)">
+    </app-search-input>
+    </div>
+
+    <div class="mt-2 mt-md-0">
+      <button
+        type="button"
+        class="me-2 btn btn-primary"
+        data-bs-toggle="modal"
+        *ngIf="authService.checkPermissions('CREATE_DEPARTMENT')"
+        data-bs-target="#departmentUploadModal"
+      >
+        {{ "ADD_BY_XLSX" | translate }}
+      </button>
+      <button
+        type="button"
+        *ngIf="authService.checkPermissions('CREATE_DEPARTMENT')"
+        class="btn btn-primary"
+        (click)="navigateAddDepartment()"
+      >
+        {{ "ADD_DEPARTMENT" | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+  
+  <div class="rounded-4 w-100 h-75" style="overflow: hidden;">
+    <div class="table-responsive mh-75" style="overflow-y: auto">
+      <table class="table table-hover table-borderless align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>{{ "DEPARTMENT_NAME" | translate }}</th>
+            <th>{{ "CREATE_AT" | translate }}</th>
+            <th>{{ "UPDATE_AT" | translate }}</th>
+            <th>{{ "ACTION" | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let department of departments">
+            <td>{{ department.id }}</td>
+            <td>{{ department.name }}</td>
+            <td>{{ department.createdAt | date : "MM/dd/yyyy" }}</td>
+            <td>{{ department.updatedAt | date : "MM/dd/yyyy" }}</td>
+            <td>
+              <div class="d-flex">
+                <div
+                  class="me-2 cursor-pointer"
+                  (click)="openDepartmentModal(department)"
+                >
+                  <img src="assets/icons/eye.svg" alt="Arrow" />
+                </div>
+                <div
+                  class="me-2 cursor-pointer"
+                  *ngIf="authService.checkPermissions('UPDATE_DEPARTMENT')"
+                  (click)="editDepartment(department)"
+                >
+                  <img src="assets/icons/pen.svg" alt="Arrow" />
+                </div>
+                <div
+                  class="cursor-pointer"
+                  data-bs-toggle="modal"
+                  *ngIf="authService.checkPermissions('DELETE_DEPARTMENT')"
+                  (click)="openDeleteModal(department.id)"
+                >
+                  <img src="assets/icons/bin.svg" alt="Arrow" />
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div
+    class="pagination-container d-flex w-100 justify-content-between position-md-absolute"
+    style=" bottom: 0; padding: 10px 10px 0 0"
+  >
+    <div class="d-flex align-items-center">
+      {{"TOTAL_RECORD_COUNT" | translate}}: {{ totalRecords }}
+    </div>
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [rows]="rows"
+      [first]="first"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[7, 10, 30, 50]"
+    />
+  </div>
+</div>
+
+<!-- Department Modal -->
+<div class="modal fade" id="departmentModal" tabindex="-1" aria-labelledby="departmentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="departmentModalLabel">{{ selectedDepartment?.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="d-flex justify-content-center mb-3">
+          <img
+            [src]="selectedDepartment?.urlLogo"
+            alt="Department Logo"
+            class="rounded-circle border border-2"
+            style="width: 100px; height: 100px; object-fit: cover"
+          />
+        </div>
+        <h5 class="fw-bold">{{ selectedDepartment?.name }}</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          {{ "CLOSE" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-upload-modal
+  modalId="departmentUploadModal"
+  [title]="'UPLOAD_FILE_FOR_DEPARTMENT' | translate"
+  [templateUrl]="'http://localhost:8000/AMQNU/api/departments/download-template'"
+  [uploadFn]="uploadDepartment"
+  (finished)="loadDepartments({ page: page, rows: rows })">
+</app-upload-modal>
+
+
+<app-confirm-delete-modal
+  modalId="deleteModal"
+  [title]="'CONFIRM_DELETE' | translate"
+  [message]="'DELETE_ITEM' | translate"
+  [itemId]="itemIdToDelete"
+  [deleteFn]="deleteDepartment"  
+  (done)="loadDepartments({ page: page, rows: rows })">
+</app-confirm-delete-modal>
