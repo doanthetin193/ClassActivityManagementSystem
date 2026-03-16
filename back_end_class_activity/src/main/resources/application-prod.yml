@@ -1,0 +1,27 @@
+jwt:
+  signerKey: ${JWT_SIGNER_KEY}
+
+cloudinary:
+  cloud_name: ${CLOUDINARY_CLOUD_NAME:djpmekvyd}
+  api_key: ${CLOUDINARY_API_KEY:486573992241243}
+  api_secret: ${CLOUDINARY_API_SECRET}
+
+local:
+  storage:
+    path: ${FILE_STORAGE_PATH:/tmp/file_activity_repo}
+
+server:
+  host: ${BACKEND_HOST}
+
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  mail:
+    username: ${MAIL_USERNAME:epicescapesnews@gmail.com}
+    password: ${MAIL_PASSWORD}

@@ -1,20 +1,116 @@
+/* Header components */
 
-.circle-dropdown {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 20px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%; /* Bo tròn nút */
-    border: .01px solid #6c757d; /* Màu viền */
-    color: #6c757d; /* Màu của mũi tên */
-    font-size: 24px; /* Kích thước mũi tên */
-    background-color: transparent;
-    cursor: pointer;
-  }
-  
-  /* Tùy chọn hiệu ứng hover */
-  .circle-dropdown:hover {
-    background-color: #f8f9fa;
-  }
+.header-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--gray-100);
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-600);
+  transition: all var(--transition-fast);
+}
+
+.header-icon-btn:hover {
+  background: var(--primary-100);
+  color: var(--primary-600);
+}
+
+.header-logo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+}
+
+/* Notification badge */
+.notification-btn {
+  position: relative;
+}
+
+.noti-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 17px;
+  height: 17px;
+  background: var(--danger);
+  color: white;
+  font-size: 0.62rem;
+  font-weight: 700;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  border: 2px solid white;
+  line-height: 1;
+}
+
+/* User button */
+.header-user-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gray-50);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.75rem 0.3rem 0.35rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.header-user-btn:hover {
+  background: var(--primary-50);
+  border-color: var(--primary-300);
+}
+
+.header-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-400), var(--primary-700));
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Language dropdown item */
+.lang-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--gray-700);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.lang-item:hover {
+  background: var(--gray-100);
+  color: var(--gray-900);
+}
+
+/* Dropdown item shared */
+.qnu-drop-item {
+  display: flex;
+  align-items: center;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.qnu-drop-item:hover {
+  background: var(--gray-100);
+}

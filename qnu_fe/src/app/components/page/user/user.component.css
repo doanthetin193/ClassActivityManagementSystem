@@ -1,0 +1,186 @@
+/* ===== PAGE CONTAINER (shared for all pages) ===== */
+.page-container {
+  padding: 1.5rem;
+  min-height: 100%;
+}
+
+/* ===== HOME HERO ===== */
+.home-hero {
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-900) 100%);
+  border-radius: var(--radius-xl);
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-hero::before {
+  content: '';
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  top: -60px;
+  right: 60px;
+  border-radius: 50%;
+}
+
+.home-hero-content {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(199,210,254,0.95);
+  margin-bottom: 0.85rem;
+  backdrop-filter: blur(6px);
+}
+
+.home-hero-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: white;
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.4px;
+  line-height: 1.25;
+  max-width: 600px;
+}
+
+.home-hero-sub {
+  font-size: 0.85rem;
+  color: rgba(199,210,254,0.82);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 580px;
+}
+
+.home-hero-icon {
+  font-size: 5rem;
+  color: rgba(255,255,255,0.08);
+  flex-shrink: 0;
+  margin-left: 1.5rem;
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .home-hero-icon { display: block; }
+}
+
+/* ===== STATS GRID ===== */
+.home-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1024px) { .home-stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 576px)  { .home-stats { grid-template-columns: 1fr; } }
+
+.stat-card {
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border: 1px solid transparent;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--gray-800);
+}
+
+.stat-desc {
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  line-height: 1.4;
+}
+
+/* Color variants */
+.stat-indigo { background: var(--primary-50);  border-color: var(--primary-100); }
+.stat-indigo .stat-icon { color: var(--primary-600); }
+
+.stat-violet { background: #f5f3ff; border-color: #ede9fe; }
+.stat-violet .stat-icon { color: #7c3aed; }
+
+.stat-teal   { background: #f0fdf4; border-color: #dcfce7; }
+.stat-teal   .stat-icon { color: #059669; }
+
+.stat-amber  { background: #fffbeb; border-color: #fef3c7; }
+.stat-amber  .stat-icon { color: #d97706; }
+
+/* ===== INFO CARDS ===== */
+.home-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 768px) { .home-info-grid { grid-template-columns: 1fr; } }
+
+.info-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  border: 1px solid var(--gray-100);
+  box-shadow: var(--card-shadow);
+}
+
+.info-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.info-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.info-card-icon.indigo { background: var(--primary-100); color: var(--primary-700); }
+.info-card-icon.teal   { background: #d1fae5;            color: #065f46; }
+
+.info-card-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--gray-800);
+}
+
+.info-card-text {
+  font-size: 0.83rem;
+  color: var(--gray-600);
+  line-height: 1.7;
+  margin: 0;
+}

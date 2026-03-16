@@ -1,190 +1,98 @@
-<!-- <div class="vh-100 vw-100">
-  <div class="pt-3 px-4 w-100 d-flex justify-content-between">
-    <div class="d-flex align-items-center">
-      <div
-        class="custom-icon d-flex align-items-center justify-content-center me-1"
-      >
-        <img src="assets/images/note_icon.png" class="h-75 w-75" alt="" />
-      </div>
-      <span class="title-text fs-4 fw-bold">Student management support</span>
-    </div>
-    <div class="d-flex align-items-center">
-      <div>
-        <img src="assets/images/note_icon.png" class="h-75 w-75 rounded-circle border border-secondary" alt="" />
-      </div>
-      <div>
-        <div class="text-dark text-start fs-sm-6 fs-md-4 fs-lg-2 fw-bold">
-          Cao Thanh Vuong
+<div class="login-page">
+
+  <!-- Left panel: form -->
+  <div class="login-left">
+    <div class="login-form-wrapper">
+
+      <!-- Brand -->
+      <div class="login-brand">
+        <div class="login-brand-icon">
+          <i class="bi bi-mortarboard-fill"></i>
         </div>
-        <div class="text-muted text-start fs-sm-6 fs-md-4 fs-lg-2">Admin</div>
-      </div>
-      <div class="dropdown">
-        <button
-          class="circle-dropdown"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <i class="bi bi-chevron-down fs-6"></i>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Action 1</a></li>
-          <li><a class="dropdown-item" href="#">Action 2</a></li>
-          <li><a class="dropdown-item" href="#">Action 3</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <section class="h-80 vw-100">
-    <div class="container h-100 px-md-5 px-2">
-      <div
-        class="row d-flex h-100 justify-content-between px-5 align-items-center"
-      >
-        <div class="col-12 col-md-6">
-          <div class="text-start fw-bold fs-1 letter-spacing-1">Login</div>
-          <div class="text-start text-muted mt-1 mb-4">
-            Login to access your account
-          </div>
-          <p-floatLabel>
-            <input
-              pInputText
-              class="w-90"
-              id="username"
-              [(ngModel)]="username"
-            />
-            <label for="username">Username</label>
-          </p-floatLabel>
-          <div class="mt-3">
-            <p-floatLabel>
-              <p-password
-                class="w-90"
-                [(ngModel)]="password"
-                [feedback]="false"
-                toggleMask="true"
-              />
-              <label for="password">Password</label>
-            </p-floatLabel>
-          </div>
-          <div class="d-flex mt-3 w-90 justify-content-between">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="rememberme"
-              />
-              <label class="form-check-label" for="rememberme">
-                Remember me
-              </label>
-            </div>
-            <p>
-              <a
-                class="link-offset-2 link-underline link-underline-opacity-0 link-danger"
-                href="#"
-                >Forgot Password</a
-              >
-            </p>
-          </div>
-          <button type="button" class="btn btn-primary w-90 mt-3">Login</button>
+        <div>
+          <div class="login-brand-name">QNU System</div>
+          <div class="login-brand-sub">Class Activity Management</div>
         </div>
-        <div
-          class="col-md-5 d-none d-md-flex h-100 bg-login justify-content-center align-items-center rounded-5"
-        >
-          <img
-            src="assets/images/login.png"
-            alt="login"
-            class="h-75 w-100 img-fluid"
+      </div>
+
+      <!-- Title -->
+      <div class="login-title">{{ 'LOGIN' | translate }}</div>
+      <div class="login-subtitle">{{ 'LOGIN_ACCESS' | translate }}</div>
+
+      <!-- Form -->
+      <div class="login-form">
+
+        <!-- Username -->
+        <div class="form-group">
+          <label class="form-label" for="username">Username</label>
+          <input
+            pInputText
+            class="qnu-input w-100"
+            id="username"
+            [(ngModel)]="username"
+            placeholder="Nhập tên đăng nhập..."
+            (keydown.enter)="onSubmit()"
+            autocomplete="username"
           />
         </div>
-      </div>
-    </div>
-  </section>
-</div> -->
 
-<div class="h-100 w-100" style="background-color: white;">
-<div class="container h-100 px-md-5 pt-4 pb-4" >
-  <div
-    class="row d-flex h-100 justify-content-between px-5 align-items-center rounded-5 border border-1 pe-0"
-  >
-    <div class="col-12 col-md-6">
-      <div class="text-start fw-bold fs-1 letter-spacing-1">{{ 'LOGIN' | translate}}</div>
-      <div class="text-start text-muted mt-1 mb-4">
-        {{ 'LOGIN_ACCESS' | translate }}
-      </div>
-      <p-floatLabel>
-        <input
-          pInputText
-          class="w-90"
-          id="username"
-          [(ngModel)]="username"
-        />
-        <label for="username">Username</label>
-      </p-floatLabel>
-      <div class="mt-3">
-        <p-floatLabel>
+        <!-- Password -->
+        <div class="form-group mt-3">
+          <label class="form-label">Password</label>
           <p-password
-            class="w-90"
             [(ngModel)]="password"
             [feedback]="false"
             toggleMask="true"
+            placeholder="Nhập mật khẩu..."
+            styleClass="w-100"
+            inputStyleClass="qnu-input w-100"
+            (keydown.enter)="onSubmit()"
           />
-          <label for="password">Password</label>
-        </p-floatLabel>
-      </div>
-      <div class="d-flex mt-3 w-90 justify-content-between">
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="rememberme"
-          />
-          <label class="form-check-label" for="rememberme">
+        </div>
+
+        <!-- Remember & Forgot -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <label class="remember-label">
+            <input class="form-check-input me-2" type="checkbox" id="rememberme"/>
             {{ 'REMEMBER_ME' | translate }}
           </label>
+          <a href="#" class="forgot-link">{{ 'FORGOT_PASSWORD' | translate }}</a>
         </div>
-        <p>
-          <a
-            class="link-offset-2 link-underline link-underline-opacity-0 link-danger"
-            href="#"
-            >{{'FORGOT_PASSWORD' | translate}}</a
-          >
-        </p>
+
+        <!-- Error alert -->
+        <div *ngIf="error" class="login-error">
+          <i class="bi bi-exclamation-circle-fill me-2"></i>
+          {{ errorMessage }}
+        </div>
+
+        <!-- Submit -->
+        <button class="login-btn" (click)="onSubmit()">
+          <span>{{ 'LOGIN' | translate }}</span>
+          <i class="bi bi-arrow-right-circle-fill ms-2" style="font-size:1rem"></i>
+        </button>
+
       </div>
-      <button type="button" (click)="onSubmit()" class="btn btn-primary w-90 mt-3">{{'LOGIN' | translate}}</button>
-    </div>
-    
-    <div
-      class="col-md-6 d-none d-md-flex h-100 bg-login justify-content-center align-items-center" style="border-radius: 0 2rem 2rem 0;"
-    >
-      <img
-        src="assets/images/login.png"
-        alt="login"
-        class="h-75 w-90 img-fluid"
-      />
     </div>
   </div>
-</div>
 
-<div
-  *ngIf="error"
-  class="alert alert-danger alert-dismissible fade show"
-  role="alert"
->
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="Close"
-  ></button>
-  <strong>Error </strong> {{ errorMessage }}
-</div>
-</div>
+  <!-- Right panel: illustration -->
+  <div class="login-right">
+    <div class="login-right-content">
+      <div class="login-illustration">
+        <img src="assets/images/login.png" alt="login illustration" class="login-img"/>
+      </div>
+      <div class="login-right-title">Quản lý sinh hoạt lớp hiệu quả</div>
+      <div class="login-right-desc">
+        Hệ thống số hoá toàn bộ quy trình điểm danh,<br/>
+        thông báo và báo cáo hoạt động lớp học
+      </div>
+      <div class="login-features">
+        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> Điểm danh thông minh</span>
+        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> Thông báo real-time</span>
+        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> Báo cáo tự động</span>
+        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> Đa ngôn ngữ</span>
+      </div>
+    </div>
+  </div>
 
-<script>
-  var alertList = document.querySelectorAll(".alert");
-  alertList.forEach(function (alert) {
-    new bootstrap.Alert(alert);
-  });
-</script>
-
+</div>

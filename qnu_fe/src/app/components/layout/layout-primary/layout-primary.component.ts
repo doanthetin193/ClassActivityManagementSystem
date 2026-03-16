@@ -13,6 +13,7 @@ import { NotificationResponse } from '../../../dto/response/notification-respons
 import { NotiService } from '../../../service/noti.service';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../../service/language.service';
+import { SidebarService } from '../../../service/sidebar.service';
 
 
 
@@ -42,10 +43,15 @@ export class LayoutPrimaryComponent implements OnInit, OnDestroy {
     private websocketService: WebSocketService,
     private notiService: NotiService,
     private translate: TranslateService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private sidebarService: SidebarService
   ) {
-    
     this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
+  toggleSidebar(event: MouseEvent): void {
+    event.stopPropagation();
+    this.sidebarService.toggle();
   }
 
   toggleNotification(): void {

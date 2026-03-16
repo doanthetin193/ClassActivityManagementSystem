@@ -1,64 +1,53 @@
-<div class="rounded-4 w-100 h-100" style="position: relative">
-  <div *ngIf="!isMyClass" class="fs-4 fw-bold mb-2">
-    {{ "CLASS" | translate }}
-  </div>
-  <div *ngIf="isMyClass" class="fs-4 fw-bold mb-2">
-    {{ "MY_CLASS" | translate }}
-  </div>
-  <div class="mb-2 d-flex justify-content-between">
-    <div class="col-md-5">
-      <app-search-input
-        [placeholder]="'SEARCH' | translate"
-        (search)="onKeywordChange($event)"
-      >
-      </app-search-input>
-    </div>
-    <div class="d-flex me-4" *ngIf="!isMyClass">
-      <button
-        class="btn btn-outline-primary me-2 d-flex align-items-center justify-content-center"
-        style="border-width: 1px"
-        data-bs-toggle="modal"
-        data-bs-target="#filterModal"
-      >
-        <svg
-          fill="currentColor"
-          width="24px"
-          height="24px"
-          viewBox="-5.5 0 32 32"
-          version="1.1"
-          class="bi bi-funnel-fill me-2"
-        >
-          <title>{{ "FILTER" | translate }}</title>
-          <path
-            d="M8.48 25.72c-0.16 0-0.32-0.040-0.44-0.12-0.24-0.16-0.4-0.44-0.4-0.72v-8.72l-7.48-8.48c-0.2-0.24-0.28-0.6-0.12-0.88s0.44-0.48 0.76-0.48h19.8c0.32 0 0.64 0.2 0.76 0.48 0.12 0.32 0.080 0.64-0.12 0.92l-7.8 8.8v6.32c0 0.32-0.2 0.6-0.48 0.76l-4.080 2c-0.080 0.080-0.24 0.12-0.4 0.12zM2.64 7.96l6.48 7.32c0.12 0.16 0.2 0.36 0.2 0.56v7.64l2.4-1.2v-6.080c0-0.2 0.080-0.4 0.2-0.56l6.8-7.68c0.040 0-16.080 0-16.080 0z"
-          />
-        </svg>
-        {{ "FILTER" | translate }}
-      </button>
+<div class="page-container">
 
-      <button
-        *ngIf="authService.checkPermissions('CREATE_CLASS')"
-        type="button"
-        class="me-2 btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#csvUploadModal"
-      >
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-title-group" style="display:flex;flex-direction:column">
+      <h1 class="page-title">
+        <i class="pi pi-users me-2" style="color:var(--primary-500)"></i>
+        {{ (isMyClass ? 'MY_CLASS' : 'CLASS') | translate }}
+      </h1>
+      <p class="page-subtitle">{{ 'TOTAL_RECORD_COUNT' | translate }}: <strong>{{ totalRecords }}</strong></p>
+    </div>
+    <div class="page-actions" *ngIf="!isMyClass">
+      <button *ngIf="authService.checkPermissions('CREATE_CLASS')"
+              class="btn btn-primary btn-sm"
+              data-bs-toggle="modal" data-bs-target="#csvUploadModal">
+        <i class="bi bi-file-earmark-spreadsheet me-1"></i>
         {{ "ADD_BY_XLSX" | translate }}
       </button>
-      <button
-        *ngIf="authService.checkPermissions('CREATE_CLASS')"
-        type="button"
-        class="btn btn-primary"
-        (click)="navigateAddClass()"
-      >
+      <button *ngIf="authService.checkPermissions('CREATE_CLASS')"
+              class="btn btn-primary btn-sm"
+              (click)="navigateAddClass()">
+        <i class="bi bi-plus-circle-fill me-1"></i>
         {{ "ADD_CLASS" | translate }}
       </button>
     </div>
   </div>
-  <div class="rounded-4 me-4" style="overflow: hidden; height: 400px">
-    <div class="table-responsive mh-75" style="overflow-y: auto">
-      <table class="table table-hover table-borderless align-middle">
-        <thead class="table-light">
+
+  <!-- Toolbar -->
+  <div class="page-toolbar">
+    <div class="toolbar-left">
+      <app-search-input
+        [placeholder]="'SEARCH' | translate"
+        (search)="onKeywordChange($event)"
+        style="max-width:320px;width:100%">
+      </app-search-input>
+    </div>
+    <div class="toolbar-right" *ngIf="!isMyClass">
+      <button class="btn-filter"
+              data-bs-toggle="modal" data-bs-target="#filterModal">
+        <i class="bi bi-funnel-fill"></i>
+        {{ "FILTER" | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <div style="overflow-x:auto">
+      <table class="qnu-table w-100">
+        <thead>
           <tr>
             <th>ID</th>
             <th>{{ "CLASS_NAME" | translate }}</th>
@@ -72,119 +61,90 @@
         </thead>
         <tbody>
           <tr *ngFor="let class of classes">
-            <td>{{ class.id }}</td>
-            <td>{{ class.name }}</td>
+            <td>
+              <span class="badge-status badge-purple">{{ class.id }}</span>
+            </td>
+            <td style="font-weight:600;color:var(--gray-800)">{{ class.name }}</td>
             <td>{{ class.courseName }}</td>
             <td>{{ class.departmentName }}</td>
             <td>{{ class.durationYears }}</td>
-            <td>{{ class.createdAt | date : "MM/dd/yyyy" }}</td>
-            <td>{{ class.updatedAt | date : "MM/dd/yyyy" }}</td>
+            <td style="color:var(--gray-500)">{{ class.createdAt | date : "dd/MM/yyyy" }}</td>
+            <td style="color:var(--gray-500)">{{ class.updatedAt | date : "dd/MM/yyyy" }}</td>
             <td>
-              <div class="d-flex">
-                <div class="me-2 cursor-pointer" (click)="detailClass(class)">
-                  <img src="assets/icons/eye.svg" alt="eye" />
-                </div>
-                <div
-                  class="me-2 cursor-pointer"
-                  *ngIf="
-                    !isMyClass && authService.checkPermissions('UPDATE_CLASS')
-                  "
-                  (click)="editClass(class)"
-                >
-                  <img src="assets/icons/pen.svg" alt="pen" />
-                </div>
-                <div
-                  class="cursor-pointer"
-                  data-bs-toggle="modal"
-                  *ngIf="
-                    !isMyClass && authService.checkPermissions('DELETE_CLASS')
-                  "
-                  (click)="openDeleteModal(class.id)"
-                >
-                  <img src="assets/icons/bin.svg" alt="bin" />
-                </div>
+              <div class="d-flex gap-1">
+                <button class="action-btn action-btn-view"
+                        (click)="detailClass(class)"
+                        title="Xem chi tiết">
+                  <i class="bi bi-eye-fill"></i>
+                </button>
+                <button *ngIf="!isMyClass && authService.checkPermissions('UPDATE_CLASS')"
+                        class="action-btn action-btn-edit"
+                        (click)="editClass(class)"
+                        title="Chỉnh sửa">
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
+                <button *ngIf="!isMyClass && authService.checkPermissions('DELETE_CLASS')"
+                        class="action-btn action-btn-delete"
+                        (click)="openDeleteModal(class.id)"
+                        title="Xóa">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="classes.length === 0">
+            <td colspan="8">
+              <div class="empty-state">
+                <i class="bi bi-inbox"></i>
+                <p>{{ 'NO_DATA' | translate }}</p>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
-  <div
-    class="pagination-container d-flex w-100 justify-content-between"
-    style="position: absolute; bottom: 0; padding: 10px 10px 0 0"
-  >
-    <div class="d-flex align-items-center">
-      {{ "TOTAL_RECORD_COUNT" | translate }}: {{ totalRecords }}
+
+    <!-- Footer pagination -->
+    <div class="table-footer">
+      <span class="record-count">
+        {{ "TOTAL_RECORD_COUNT" | translate }}: <strong>{{ totalRecords }}</strong>
+      </span>
+      <p-paginator *ngIf="!isMyClass"
+        (onPageChange)="onPageChange($event)"
+        [rows]="rows" [first]="first"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[7,10,30,50]"
+      />
     </div>
-    <div  *ngIf="!isMyClass"><p-paginator
-      (onPageChange)="onPageChange($event)"
-      [rows]="rows"
-      [first]="first"
-      [totalRecords]="totalRecords"
-      [rowsPerPageOptions]="[7, 10, 30, 50]"
-    /></div>
   </div>
+
 </div>
 
-<div
-  class="modal fade"
-  id="filterModal"
-  #filterModal
-  tabindex="-1"
-  aria-labelledby="filterModalLabel"
-  aria-hidden="true"
->
+<!-- Filter Modal -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="filterModalLabel">
-          {{ "SELECT_FILTER" | translate }}
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <h5 class="modal-title">{{ "SELECT_FILTER" | translate }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      <div class="modal-body">
-        <div *ngIf="isRoleAdmin()">
-          <label for="department" class="form-label">{{
-            "DEPARTMENT" | translate
-          }}</label>
-          <div class="mb-3">
-            <p-autoComplete
-              [(ngModel)]="selectedDepartment"
-              [dropdown]="true"
-              [suggestions]="filteredDepartments"
-              placeholder="Select Department"
-              (completeMethod)="
-                filterGeneric($event, 'departments', 'filteredDepartments')
-              "
-              optionLabel="name"
-            />
-          </div>
+      <div class="modal-body p-4">
+        <div *ngIf="isRoleAdmin()" class="mb-3">
+          <label class="form-label fw-semibold">{{ "DEPARTMENT" | translate }}</label>
+          <p-autoComplete [(ngModel)]="selectedDepartment" [dropdown]="true"
+            [suggestions]="filteredDepartments"
+            (completeMethod)="filterGeneric($event, 'departments', 'filteredDepartments')"
+            optionLabel="name" styleClass="w-100"/>
         </div>
-        <label for="course" class="form-label">{{ "BATCH" | translate }}</label>
         <div class="mb-3">
-          <p-autoComplete
-            [(ngModel)]="selectedCourse"
-            [dropdown]="true"
-            placeholder="Select Batch"
+          <label class="form-label fw-semibold">{{ "BATCH" | translate }}</label>
+          <p-autoComplete [(ngModel)]="selectedCourse" [dropdown]="true"
             [suggestions]="filteredCourses"
-            (completeMethod)="
-              filterGeneric($event, 'courses', 'filteredCourses')
-            "
-            optionLabel="name"
-          />
+            (completeMethod)="filterGeneric($event, 'courses', 'filteredCourses')"
+            optionLabel="name" styleClass="w-100"/>
         </div>
-        <p class="text-muted">{{ "CAN_CHOOSE_MUITIPLE_FILTER" | translate }}</p>
-        <button
-          type="button"
-          class="btn btn-primary w-100"
-          (click)="onSelectedFilter()"
-        >
+        <p class="text-muted small mb-3">{{ "CAN_CHOOSE_MUITIPLE_FILTER" | translate }}</p>
+        <button class="btn btn-primary w-100" (click)="onSelectedFilter()">
           {{ "APPLY_NOW" | translate }}
         </button>
       </div>
@@ -198,8 +158,7 @@
   [message]="'DELETE_ITEM' | translate"
   [itemId]="itemIdToDelete"
   [deleteFn]="deleteClass"
-  (done)="loadClasses({ page: page, rows: rows })"
->
+  (done)="loadClasses({ page: page, rows: rows })">
 </app-confirm-delete-modal>
 
 <app-upload-modal
@@ -207,6 +166,5 @@
   [title]="'UPLOAD_FILE_FOR_CLASS' | translate"
   [templateUrl]="'http://localhost:8000/AMQNU/api/classes/download-template'"
   [uploadFn]="uploadClass"
-  (finished)="loadClasses({ page: page, rows: rows })"
->
+  (finished)="loadClasses({ page: page, rows: rows })">
 </app-upload-modal>

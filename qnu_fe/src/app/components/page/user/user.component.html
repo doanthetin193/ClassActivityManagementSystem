@@ -1,17 +1,61 @@
-<div class="container mt-5">
-  <h1 class="text-center mb-4">{{"TITLE_HOME_NAME" | translate}}</h1>
-  <hr class="mb-4 mx-auto" style="width: 60%;">
+<!-- ===== DASHBOARD / HOME ===== -->
+<div class="page-container">
 
-  <p class="text-justify">
-{{"HOME_1" | translate}}
-  </p>
+  <!-- Hero Banner -->
+  <div class="home-hero">
+    <div class="home-hero-content">
+      <div class="home-hero-badge">
+        <i class="bi bi-mortarboard-fill me-1"></i>
+        Quy Nhon University
+      </div>
+      <h1 class="home-hero-title">{{"TITLE_HOME_NAME" | translate}}</h1>
+      <p class="home-hero-sub">{{"HOME_1" | translate}}</p>
+    </div>
+    <div class="home-hero-icon">
+      <i class="bi bi-building-fill-check"></i>
+    </div>
+  </div>
 
-  <p class="text-justify">
-{{"HOME_2" | translate}}
-    
-    </p>
+  <!-- Stats Cards -->
+  <div class="home-stats">
+    <div class="stat-card stat-indigo">
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="stat-label">Sinh viên</div>
+      <div class="stat-desc">Quản lý toàn bộ hồ sơ sinh viên</div>
+    </div>
+    <div class="stat-card stat-violet">
+      <div class="stat-icon"><i class="bi bi-easel3-fill"></i></div>
+      <div class="stat-label">Hoạt động lớp</div>
+      <div class="stat-desc">Lên lịch & theo dõi hoạt động</div>
+    </div>
+    <div class="stat-card stat-teal">
+      <div class="stat-icon"><i class="bi bi-clipboard2-check-fill"></i></div>
+      <div class="stat-label">Điểm danh</div>
+      <div class="stat-desc">Mã code thông minh thời gian thực</div>
+    </div>
+    <div class="stat-card stat-amber">
+      <div class="stat-icon"><i class="bi bi-bell-fill"></i></div>
+      <div class="stat-label">Thông báo</div>
+      <div class="stat-desc">Real-time WebSocket notification</div>
+    </div>
+  </div>
 
-  <p class="text-justify">
-    {{"HOME_3" | translate}}
-  </p>
+  <!-- Info Cards -->
+  <div class="home-info-grid">
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-card-icon indigo"><i class="bi bi-info-circle-fill"></i></div>
+        <span class="info-card-title">Về hệ thống</span>
+      </div>
+      <p class="info-card-text">{{"HOME_2" | translate}}</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-card-icon teal"><i class="bi bi-stars"></i></div>
+        <span class="info-card-title">Tầm nhìn</span>
+      </div>
+      <p class="info-card-text">{{"HOME_3" | translate}}</p>
+    </div>
+  </div>
+
 </div>
