@@ -184,3 +184,49 @@
   line-height: 1.7;
   margin: 0;
 }
+
+:root[data-theme='dark'] .home-hero-badge {
+  background: rgba(148, 163, 184, 0.16);
+  border-color: rgba(148, 163, 184, 0.28);
+  color: #dbe4f4;
+}
+
+:root[data-theme='dark'] .stat-card {
+  background: #111b2d;
+  border-color: #24344f;
+}
+
+:root[data-theme='dark'] .stat-indigo {
+  background: #14233a;
+  border-color: #284569;
+}
+
+:root[data-theme='dark'] .stat-violet {
+  background: #221a3d;
+  border-color: #3f2f67;
+}
+
+:root[data-theme='dark'] .stat-teal {
+  background: #0f2b2a;
+  border-color: #1d4f4c;
+}
+
+:root[data-theme='dark'] .stat-amber {
+  background: #342613;
+  border-color: #5b4323;
+}
+
+:root[data-theme='dark'] .stat-label,
+:root[data-theme='dark'] .info-card-title {
+  color: #e8efff;
+}
+
+:root[data-theme='dark'] .stat-desc,
+:root[data-theme='dark'] .info-card-text {
+  color: #b5c2d9;
+}
+
+:root[data-theme='dark'] .info-card {
+  background: #111b2d;
+  border-color: #24344f;
+}

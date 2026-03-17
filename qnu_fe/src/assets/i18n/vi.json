@@ -15,6 +15,7 @@
     "CLASS": "Lớp",
     "ADVISOR": "Cố vấn học tập",
     "ROLE": "Vai trò",
+    "HOME": "Trang chủ",
     "MY_CLASS": "Lớp của tôi",
     "ACTIVITY": "Sinh hoạt lớp",
     "LOADING": "Đang tải...",
@@ -151,6 +152,17 @@
     "TITLE_HOME_NAME": "Hệ thống Quản lý Sinh hoạt Lớp",
     "HOME_1": "Trong bối cảnh đào tạo theo tín chỉ ngày càng phổ biến tại các trường đại học, việc quản lý sinh hoạt lớp bằng phương pháp truyền thống đang gặp nhiều thách thức, đặc biệt về hiệu suất và độ chính xác. Với mục tiêu hiện đại hóa quy trình, \"Hệ thống Quản lý Sinh hoạt Lớp\" ra đời nhằm tối ưu hóa các hoạt động như điểm danh, thông báo, quản lý tài liệu và báo cáo tự động.",
     "HOME_2": "Được thiết kế đặc biệt cho Khoa Công nghệ Thông tin - Đại học Quy Nhơn, hệ thống đơn giản hóa quy trình tổ chức các hoạt động lớp học, từ phân công cố vấn học tập, quản lý thông báo, đến theo dõi và đánh giá hiệu quả sinh hoạt lớp. Hệ thống không chỉ nâng cao hiệu suất quản lý mà còn mang lại sự thuận tiện cho sinh viên và giảng viên trong các hoạt động tập thể.",
-    "HOME_3": "Với giao diện thân thiện và hiện đại, hệ thống mang đến trải nghiệm quản lý liền mạch, góp phần nâng cao tính minh bạch và độ chính xác trong tổ chức các hoạt động lớp học tại các trường đại học."
+    "HOME_3": "Với giao diện thân thiện và hiện đại, hệ thống mang đến trải nghiệm quản lý liền mạch, góp phần nâng cao tính minh bạch và độ chính xác trong tổ chức các hoạt động lớp học tại các trường đại học.",
+    "HOME_BADGE": "Đại học Quy Nhơn",
+    "HOME_STAT_STUDENT": "Sinh viên",
+    "HOME_STAT_STUDENT_DESC": "Quản lý toàn bộ hồ sơ sinh viên",
+    "HOME_STAT_ACTIVITY": "Hoạt động lớp",
+    "HOME_STAT_ACTIVITY_DESC": "Lên lịch và theo dõi hoạt động",
+    "HOME_STAT_ATTENDANCE": "Điểm danh",
+    "HOME_STAT_ATTENDANCE_DESC": "Mã code thông minh thời gian thực",
+    "HOME_STAT_NOTIFICATION": "Thông báo",
+    "HOME_STAT_NOTIFICATION_DESC": "Thông báo WebSocket theo thời gian thực",
+    "HOME_ABOUT_SYSTEM": "Về hệ thống",
+    "HOME_VISION": "Tầm nhìn"
   }
   

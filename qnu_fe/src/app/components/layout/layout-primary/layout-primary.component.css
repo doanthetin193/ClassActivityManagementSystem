@@ -18,6 +18,14 @@
   color: var(--primary-600);
 }
 
+.theme-toggle-btn {
+  border: 1px solid var(--gray-200);
+}
+
+.theme-toggle-btn i {
+  font-size: 0.9rem;
+}
+
 .header-logo-dot {
   width: 8px;
   height: 8px;
@@ -113,4 +121,24 @@
 
 .qnu-drop-item:hover {
   background: var(--gray-100);
+}
+
+:host-context([data-theme='dark']) .dropdown-menu {
+  background: #111b2d;
+  border-color: #24344f !important;
+}
+
+:host-context([data-theme='dark']) .lang-item,
+:host-context([data-theme='dark']) .qnu-drop-item {
+  color: #e6eefc;
+}
+
+:host-context([data-theme='dark']) .lang-item:hover,
+:host-context([data-theme='dark']) .qnu-drop-item:hover {
+  background: #1a2a42;
+  color: #ffffff;
+}
+
+:host-context([data-theme='dark']) .dropdown-divider {
+  border-top-color: #2a3a56;
 }

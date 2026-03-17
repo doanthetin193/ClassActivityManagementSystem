@@ -63,6 +63,9 @@ export class LayoutSidebarComponent implements OnInit, OnDestroy {
   }
 
   isActive(url: string): boolean {
+    if (url === '/') {
+      return this.router.url === '/';
+    }
     return this.router.url.startsWith(url);
   }
 

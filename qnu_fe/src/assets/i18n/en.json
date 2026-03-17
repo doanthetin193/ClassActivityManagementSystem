@@ -15,6 +15,7 @@
     "CLASS": "Class",
     "ADVISOR": "Academic Advisor",
     "ROLE": "Role",
+    "HOME": "Home",
     "MY_CLASS": "My Class",
     "ACTIVITY": "Activity",
     "LOADING": "Loading...",
@@ -153,6 +154,17 @@
     "TITLE_HOME_NAME": "Class Activity Management System",
     "HOME_1": "In the era of credit-based training becoming increasingly popular in universities, managing class activities through traditional methods is facing significant challenges, especially in terms of efficiency and accuracy. With the aim of modernizing the process, the \"Class Activity Management System\" was developed to streamline activities such as attendance tracking, notifications, document management, and automated reporting.",
     "HOME_2": "Specifically designed for the Faculty of Information Technology at Quy Nhon University, the system simplifies the organization of class activities, from assigning academic advisors, managing notifications, to monitoring and evaluating class activity performance. This system not only enhances management efficiency but also provides convenience for students and lecturers in their collective activities.",
-    "HOME_3": "With a user-friendly and modern interface, the system delivers a seamless management experience, contributing to transparency and accuracy in organizing class activities at universities."
+    "HOME_3": "With a user-friendly and modern interface, the system delivers a seamless management experience, contributing to transparency and accuracy in organizing class activities at universities.",
+    "HOME_BADGE": "Quy Nhon University",
+    "HOME_STAT_STUDENT": "Students",
+    "HOME_STAT_STUDENT_DESC": "Manage all student profiles",
+    "HOME_STAT_ACTIVITY": "Class Activities",
+    "HOME_STAT_ACTIVITY_DESC": "Schedule and track activities",
+    "HOME_STAT_ATTENDANCE": "Attendance",
+    "HOME_STAT_ATTENDANCE_DESC": "Smart real-time attendance code",
+    "HOME_STAT_NOTIFICATION": "Notifications",
+    "HOME_STAT_NOTIFICATION_DESC": "Real-time WebSocket notifications",
+    "HOME_ABOUT_SYSTEM": "About the System",
+    "HOME_VISION": "Vision"
   }
   

@@ -168,8 +168,8 @@ public class AccountService {
     }
 
     private AccountResponse toAccountResponse(Account account) {
-        String linkedName = resolveLinkedName(account.getUsername());
-        String linkedRole = resolveLinkedRole(account.getUsername());
+        String linkedName = resolveLinkedName(account);
+        String linkedRole = resolveLinkedRole(account);
         return AccountResponse.builder()
                 .id(account.getId())
                 .username(account.getUsername())
@@ -182,20 +182,32 @@ public class AccountService {
                 .build();
     }
 
-    private String resolveLinkedName(String username) {
-        Lecturer lecturer = accountRepository.getLecturerByUsername(username);
+    private String resolveLinkedName(Account account) {
+        Lecturer lecturer = account.getLecturers() == null ? null : account.getLecturers().stream()
+                .filter(item -> !item.isDeleted())
+                .findFirst()
+                .orElse(null);
         if (ObjectUtils.isNotEmpty(lecturer)) return lecturer.getName();
-        Staff staff = accountRepository.getStaffByUsername(username);
+
+        Staff staff = account.getStaffs() == null ? null : account.getStaffs().stream()
+                .filter(item -> !item.isDeleted())
+                .findFirst()
+                .orElse(null);
         if (ObjectUtils.isNotEmpty(staff)) return staff.getName();
-        Student student = accountRepository.getStudentByUsername(username);
+
+        Student student = account.getStudents() == null ? null : account.getStudents().stream()
+                .filter(item -> !item.isDeleted())
+                .findFirst()
+                .orElse(null);
         if (ObjectUtils.isNotEmpty(student)) return student.getName();
+
         return "Admin";
     }
 
-    private String resolveLinkedRole(String username) {
-        if (ObjectUtils.isNotEmpty(accountRepository.getLecturerByUsername(username))) return "Giảng viên";
-        if (ObjectUtils.isNotEmpty(accountRepository.getStaffByUsername(username))) return "Nhân viên";
-        if (ObjectUtils.isNotEmpty(accountRepository.getStudentByUsername(username))) return "Sinh viên";
+    private String resolveLinkedRole(Account account) {
+        if (account.getLecturers() != null && account.getLecturers().stream().anyMatch(item -> !item.isDeleted())) return "Giảng viên";
+        if (account.getStaffs() != null && account.getStaffs().stream().anyMatch(item -> !item.isDeleted())) return "Nhân viên";
+        if (account.getStudents() != null && account.getStudents().stream().anyMatch(item -> !item.isDeleted())) return "Sinh viên";
         return "Admin";
     }
 

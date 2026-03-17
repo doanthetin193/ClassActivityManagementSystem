@@ -35,6 +35,8 @@ export class LayoutPrimaryComponent implements OnInit, OnDestroy {
   isPopupVisible: boolean = false;
   private isBrowser: boolean;
   currentLanguage = 'en';
+  currentTheme: 'light' | 'dark' = 'light';
+  private readonly THEME_KEY = 'qnu-theme';
 
   constructor(
     private authService: AuthService,
@@ -96,6 +98,7 @@ export class LayoutPrimaryComponent implements OnInit, OnDestroy {
       this.notiCount = count;
     });
     this.currentLanguage = this.languageService.getLanguage();
+    this.initTheme();
   }
 
   logout(): void {
@@ -184,5 +187,37 @@ export class LayoutPrimaryComponent implements OnInit, OnDestroy {
   switchLanguage(language: string) {
     this.languageService.setLanguage(language); // Đổi ngôn ngữ
     this.currentLanguage = language; // Cập nhật biến ngôn ngữ
+  }
+
+  toggleTheme(event?: MouseEvent): void {
+    event?.stopPropagation();
+    const nextTheme: 'light' | 'dark' = this.currentTheme === 'light' ? 'dark' : 'light';
+    this.applyTheme(nextTheme);
+  }
+
+  private initTheme(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    const savedTheme = localStorage.getItem(this.THEME_KEY) as 'light' | 'dark' | null;
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      this.applyTheme(savedTheme);
+      return;
+    }
+
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    this.applyTheme(prefersDark ? 'dark' : 'light');
+  }
+
+  private applyTheme(theme: 'light' | 'dark'): void {
+    this.currentTheme = theme;
+
+    if (!this.isBrowser) {
+      return;
+    }
+
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(this.THEME_KEY, theme);
   }
 }

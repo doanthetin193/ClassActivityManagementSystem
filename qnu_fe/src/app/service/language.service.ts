@@ -21,7 +21,17 @@ export class LanguageService {
 
   // Hàm thay đổi ngôn ngữ
   setLanguage(language: string): void {
-    this.translate.use(language); // Thay đổi ngôn ngữ
+    // Reload để tránh dùng bản cache cũ khi vừa cập nhật file i18n.
+    this.translate.reloadLang(language).subscribe({
+      next: () => {
+        this.translate.use(language);
+      },
+      error: () => {
+        // Fallback: vẫn chuyển language dù reload gặp lỗi.
+        this.translate.use(language);
+      }
+    });
+
     // Kiểm tra nếu chạy trên client mới lưu vào localStorage
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('language', language); // Lưu ngôn ngữ vào localStorage

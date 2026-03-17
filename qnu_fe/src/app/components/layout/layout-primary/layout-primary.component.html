@@ -46,6 +46,15 @@
         </ul>
       </div>
 
+      <button
+        class="header-icon-btn theme-toggle-btn d-flex align-items-center justify-content-center"
+        type="button"
+        (click)="toggleTheme($event)"
+        [title]="currentTheme === 'light' ? 'Dark mode' : 'Light mode'"
+      >
+        <i class="bi" [ngClass]="currentTheme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill'"></i>
+      </button>
+
       <!-- Notification Bell -->
       <div class="notification-icon" *ngIf="isLoggedIn"
            (click)="toggleNotification(); $event.stopPropagation()">
