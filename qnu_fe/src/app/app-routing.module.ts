@@ -33,6 +33,7 @@ import { ActivityViewComponent } from './components/page/activity/activity-view/
 import { ActivityMinutesComponent } from './components/page/activity/activity-minutes/activity-minutes.component';
 import { ChangePasswordComponent } from './components/auth/change-password/change-password.component';
 import { AccountListComponent } from './components/page/account/account-list/account-list.component';
+import { NotificationComponent } from './components/page/notification/notification.component';
 
 const routes: Routes = [
   {
@@ -92,6 +93,7 @@ const routes: Routes = [
           {path: 'role/edit/:id', component:RoleAddComponent},
           {path: 'role/detail/:id', component:RoleDetailComponent},
           {path: 'account-management', component: AccountListComponent},
+          {path: 'notifications', component: NotificationComponent},
           {path: 'activity/minutes/:id', component: ActivityMinutesComponent},
         ]
       },

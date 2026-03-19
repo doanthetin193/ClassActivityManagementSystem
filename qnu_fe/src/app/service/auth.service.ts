@@ -55,6 +55,10 @@ export class AuthService {
     return this.http.post<any>(environment.apiURL + 'auth/change-password', request);
   }
 
+  resetRateLimitDev(path: string): Observable<any> {
+    return this.http.post<any>(environment.apiURL + path, {});
+  }
+
   clearSession(): void {
     this.deleteCookie(this.tokenKey);
     this.loggedIn.next(false);

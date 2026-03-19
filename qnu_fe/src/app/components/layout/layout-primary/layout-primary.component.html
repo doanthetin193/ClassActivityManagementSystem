@@ -8,11 +8,12 @@
       <button class="header-icon-btn d-flex align-items-center justify-content-center"
               id="sidebarToggleBtn"
               (click)="toggleSidebar($event)"
-              title="Toggle menu">
+              [title]="'HEADER_TOGGLE_MENU' | translate">
         <i class="bi bi-list fs-5"></i>
       </button>
 
-      <span class="app-logo-text d-none d-md-block">QNU — Class Activity System</span>
+      <img class="header-logo-img" src="assets/icons/logo.png" alt="QNU logo" />
+      <span class="app-logo-text d-none d-md-block">QNU — {{ 'LOGIN_BRAND_SUB' | translate }}</span>
       <span class="app-logo-text d-md-none">QNU</span>
     </div>
 
@@ -24,7 +25,7 @@
         <button class="header-icon-btn d-flex align-items-center gap-1 px-2"
                 style="width:auto; min-width:36px;"
                 type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                title="Language">
+          [title]="'HEADER_LANGUAGE' | translate">
           <img *ngIf="currentLanguage === 'lao'" src="assets/images/laos.png" alt="lao"  style="width:18px;height:13px;border-radius:2px;flex-shrink:0"/>
           <img *ngIf="currentLanguage === 'en'"  src="assets/images/en.png"   alt="en"   style="width:18px;height:13px;border-radius:2px;flex-shrink:0"/>
           <img *ngIf="currentLanguage === 'vi'"  src="assets/images/vn.png"   alt="vi"   style="width:18px;height:13px;border-radius:2px;flex-shrink:0"/>
@@ -50,7 +51,7 @@
         class="header-icon-btn theme-toggle-btn d-flex align-items-center justify-content-center"
         type="button"
         (click)="toggleTheme($event)"
-        [title]="currentTheme === 'light' ? 'Dark mode' : 'Light mode'"
+        [title]="currentTheme === 'light' ? ('THEME_DARK_MODE' | translate) : ('THEME_LIGHT_MODE' | translate)"
       >
         <i class="bi" [ngClass]="currentTheme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill'"></i>
       </button>
@@ -58,7 +59,7 @@
       <!-- Notification Bell -->
       <div class="notification-icon" *ngIf="isLoggedIn"
            (click)="toggleNotification(); $event.stopPropagation()">
-        <button class="notification-btn header-icon-btn d-flex align-items-center justify-content-center" title="Thông báo">
+        <button class="notification-btn header-icon-btn d-flex align-items-center justify-content-center" [title]="'HEADER_NOTIFICATION' | translate">
           <i class="bi bi-bell-fill" style="font-size:0.95rem"></i>
           <span class="noti-badge" *ngIf="notiCount > 0">{{ notiCount > 99 ? '99+' : notiCount }}</span>
         </button>
@@ -68,17 +69,29 @@
             <i class="bi bi-bell-fill"></i>
             {{ "NOTIFICATIONS" | translate }}
           </h4>
+          <div class="notification-actions">
+            <button type="button" class="notification-action-btn" (click)="markAllNotificationsAsRead($event)">
+              <i class="bi bi-check2-all"></i>
+              {{ 'MARK_ALL_READ' | translate }}
+            </button>
+            <button type="button" class="notification-action-btn" (click)="goToNotificationsPage($event)">
+              <i class="bi bi-list-ul"></i>
+              {{ 'VIEW_ALL' | translate }}
+            </button>
+          </div>
           <ul (scroll)="onScroll($event)">
-            <li *ngFor="let notification of notifications" [class.unread]="!notification.read">
+            <li *ngFor="let notification of notifications"
+                [class.unread]="!notification.read"
+              [class.read]="notification.read"
+                (click)="markNotificationAsRead(notification, $event)">
               <div class="notification-content">{{ notification.message }}</div>
               <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">
                 <div class="notification-time">{{ notification.notificationTime | relativeTime }}</div>
                 <div class="unread-indicator" *ngIf="!notification.read"></div>
               </div>
             </li>
-            <li *ngIf="notifications.length === 0"
-                style="justify-content:center;flex-direction:column;color:var(--gray-400);font-size:0.82rem;padding:1.5rem;text-align:center">
-              <i class="bi bi-inbox" style="font-size:1.8rem;display:block;margin-bottom:0.5rem;opacity:0.4"></i>
+            <li *ngIf="notifications.length === 0" class="notification-empty">
+              <i class="bi bi-inbox"></i>
               {{ 'NO_DATA' | translate }}
             </li>
           </ul>

@@ -1,5 +1,5 @@
-<div class="rounded-4 w-100 h-100" style="position: relative">
-    <div class="d-flex align-items-center mb-2">
+<div class="class-detail-page rounded-4 w-100 h-100" style="position: relative">
+  <div class="class-detail-breadcrumb d-flex align-items-center mb-2">
       <div class="fs-4 fw-bold">
         {{"CLASS" | translate}}
       </div>
@@ -16,12 +16,12 @@
         {{classDetail?.name}}
       </div>
     </div>
-    <div class="mb-2 me-4 d-flex justify-content-between">
+    <div class="class-detail-toolbar mb-2 me-4 d-flex justify-content-between">
       <div class="col-md-5">
-          <div class="input-group">
-              <input class="form-control border" #searchInput style="border-radius:  0.375rem;" type="search" placeholder="Search">
+            <div class="input-group class-detail-search-group">
+              <input class="form-control border class-detail-search-input" #searchInput style="border-radius:  0.375rem;" type="search" placeholder="Search">
               <span class="input-group-append">
-                  <button class="btn hvnone btn-outline-secondary bg-white border-start-0 border ms-n5" style="border-radius: 0 0.375rem 0.375rem 0; transform: translateX(-97%);" type="button">
+                <button class="btn hvnone btn-outline-secondary bg-white border-start-0 border ms-n5 class-detail-search-btn" style="border-radius: 0 0.375rem 0.375rem 0; transform: translateX(-97%);" type="button">
                     <i class="bi bi-search"></i>
                   </button>
               </span>
@@ -51,12 +51,12 @@
         </button>
       </div>
   </div>
-    <div class="rounded-4 me-4" style="overflow: hidden; height: 400px;">
+    <div class="class-detail-table-wrap rounded-4 me-4" style="overflow: hidden; height: 400px;">
       <div class="table-responsive mh-75" style="overflow-y: auto">
         <table
-          class="table table-hover table-borderless align-middle"
+          class="table table-hover table-borderless align-middle class-detail-table"
         >
-          <thead class="table-light">
+          <thead class="class-detail-thead">
             <tr>
               <th>ID</th>
               <th>{{"NAME" | translate}}</th>
@@ -103,7 +103,7 @@
       </div>
     </div>
     <div
-      class="pagination-container d-flex w-100 justify-content-between"
+      class="pagination-container class-detail-pagination d-flex w-100 justify-content-between"
       style="position: absolute; bottom: 0; padding: 10px 10px 0 0 "
     >
     <div class="d-flex align-items-center">

@@ -32,20 +32,21 @@
 }
 
 .login-brand-icon {
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(135deg, var(--primary-400), var(--primary-700));
-  border-radius: var(--radius-lg);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(99,102,241,0.35);
+  box-shadow: 0 4px 12px rgba(16, 24, 40, 0.15);
   flex-shrink: 0;
+  overflow: hidden;
 }
 
-.login-brand-icon i {
-  color: white;
-  font-size: 1.2rem;
+.login-brand-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .login-brand-name {
@@ -158,6 +159,24 @@
   color: var(--primary-800);
 }
 
+.forgot-help-alert {
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1e3a8a;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+.forgot-help-title {
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.forgot-help-text {
+  line-height: 1.45;
+}
+
 /* Error */
 .login-error {
   background: #fef2f2;
@@ -199,6 +218,32 @@
 
 .login-btn:active {
   transform: translateY(0);
+}
+
+.login-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+  box-shadow: none;
+}
+
+.dev-reset-lock-btn {
+  margin-top: 0.55rem;
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--gray-300);
+  color: var(--gray-600);
+  border-radius: var(--radius-md);
+  padding: 0.45rem 0.7rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.dev-reset-lock-btn:hover {
+  border-color: var(--primary-500);
+  color: var(--primary-600);
+  background: rgba(99, 102, 241, 0.05);
 }
 
 /* ---- Right Panel ---- */
@@ -316,4 +361,79 @@
   .login-right {
     display: none;
   }
+}
+
+:host-context([data-theme='dark']) .login-page {
+  background: #0d1628;
+}
+
+:host-context([data-theme='dark']) .login-left {
+  background: #111b2d;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
+}
+
+:host-context([data-theme='dark']) .login-brand-name {
+  color: #c8d8f6;
+}
+
+:host-context([data-theme='dark']) .login-brand-sub,
+:host-context([data-theme='dark']) .login-subtitle,
+:host-context([data-theme='dark']) .remember-label {
+  color: #9fb3d9;
+}
+
+:host-context([data-theme='dark']) .login-title,
+:host-context([data-theme='dark']) .form-label {
+  color: #e2ebfb;
+}
+
+:host-context([data-theme='dark']) .qnu-input,
+:host-context([data-theme='dark']) :host ::ng-deep p-password .p-password-input {
+  background: #0f1a2d !important;
+  color: #d8e4fb !important;
+  border-color: #283b5a !important;
+}
+
+:host-context([data-theme='dark']) .qnu-input::placeholder,
+:host-context([data-theme='dark']) :host ::ng-deep p-password .p-password-input::placeholder {
+  color: #7f93b8 !important;
+}
+
+:host-context([data-theme='dark']) .qnu-input:focus,
+:host-context([data-theme='dark']) :host ::ng-deep p-password .p-password-input:focus {
+  background: #13213a !important;
+  border-color: #5d83d8 !important;
+  box-shadow: 0 0 0 3px rgba(93, 131, 216, 0.2) !important;
+}
+
+:host-context([data-theme='dark']) .login-error {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(252, 165, 165, 0.45);
+  color: #fecaca;
+}
+
+:host-context([data-theme='dark']) .forgot-link {
+  color: #8fb0ff;
+}
+
+:host-context([data-theme='dark']) .forgot-link:hover {
+  color: #b6cbff;
+}
+
+:host-context([data-theme='dark']) .forgot-help-alert {
+  border-color: #355ea6;
+  background: rgba(37, 99, 235, 0.18);
+  color: #dbeafe;
+}
+
+:host-context([data-theme='dark']) .dev-reset-lock-btn {
+  border-color: #3a4e72;
+  color: #a9bfeb;
+  background: rgba(17, 27, 45, 0.4);
+}
+
+:host-context([data-theme='dark']) .dev-reset-lock-btn:hover {
+  border-color: #5d83d8;
+  color: #cfe0ff;
+  background: rgba(93, 131, 216, 0.12);
 }

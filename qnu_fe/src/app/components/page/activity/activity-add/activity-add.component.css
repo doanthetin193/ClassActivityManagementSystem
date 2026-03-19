@@ -1,3 +1,56 @@
 .p-element > .p-button-icon-only{
     border-radius: 50% !important;
 }
+
+.activity-upload-card {
+    border: 1px solid var(--gray-200);
+    background: var(--card-bg);
+}
+
+.activity-upload-progress {
+    border: 1px solid var(--gray-200);
+}
+
+:host-context([data-theme='dark']) .activity-add-page .fs-4 {
+    color: #dbe7ff;
+}
+
+:host-context([data-theme='dark']) .activity-upload-card {
+    background: #0f1a2d;
+    border-color: #283b5a;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.28);
+}
+
+:host-context([data-theme='dark']) .activity-upload-progress {
+    background: #14233a;
+    border-color: #2d4466;
+}
+
+:host-context([data-theme='dark']) .activity-upload-progress > span {
+    color: #d4e3ff;
+}
+
+:host-context([data-theme='dark']) ::ng-deep .p-fileupload {
+    background: #0f1a2d;
+    border: 1px solid #2a3f60;
+    border-radius: 10px;
+}
+
+:host-context([data-theme='dark']) ::ng-deep .p-fileupload .p-fileupload-buttonbar {
+    background: #14233a;
+    border-bottom: 1px solid #2a3f60;
+}
+
+:host-context([data-theme='dark']) ::ng-deep .p-fileupload .p-fileupload-content {
+    background: #0f1a2d;
+    border: none;
+}
+
+:host-context([data-theme='dark']) ::ng-deep .p-fileupload .p-fileupload-empty {
+    color: #b9cceb;
+}
+
+:host-context([data-theme='dark']) ::ng-deep .p-fileupload .p-fileupload-empty .pi-cloud-upload {
+    color: #9fb8e5;
+    border-color: #3a547c !important;
+}

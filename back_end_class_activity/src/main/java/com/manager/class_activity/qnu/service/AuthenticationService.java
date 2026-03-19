@@ -9,6 +9,7 @@
     import com.manager.class_activity.qnu.entity.InvalidatedToken;
     import com.manager.class_activity.qnu.exception.BadException;
     import com.manager.class_activity.qnu.exception.ErrorCode;
+    import com.manager.class_activity.qnu.exception.LoginFailedAttemptException;
     import com.manager.class_activity.qnu.repository.AccountRepository;
     import com.manager.class_activity.qnu.repository.InvalidatedTokenRepository;
     import com.manager.class_activity.qnu.until.JwtUtil;
@@ -37,6 +38,7 @@
         PermissionService permissionService;
         InvalidatedTokenRepository invalidatedTokenRepository;
         JwtUtil jwtUtil;
+        LoginAttemptService loginAttemptService;
 
 
         public Account validateCredentials(AuthenticationRequest request) {
@@ -50,7 +52,21 @@
         }
 
         public AuthenticationResponse authenticate(AuthenticationRequest request) {
-            Account user = validateCredentials(request);
+            String username = request.getUsername();
+            loginAttemptService.ensureNotLocked(username);
+
+            Account user;
+            try {
+                user = validateCredentials(request);
+            } catch (BadException e) {
+                if (e.getErrorCode() == ErrorCode.UNAUTHENTICATED || e.getErrorCode() == ErrorCode.USER_NOT_EXISTED) {
+                    int remainingAttempts = loginAttemptService.onLoginFailure(username);
+                    throw new LoginFailedAttemptException(remainingAttempts);
+                }
+                throw e;
+            }
+
+            loginAttemptService.onLoginSuccess(username);
 
             var token = jwtUtil.generateToken(user.getUsername(),
                     permissionService.getPermissionNamesOfAccount(user.getUsername()),

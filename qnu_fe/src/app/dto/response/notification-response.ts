@@ -1,4 +1,5 @@
 export interface NotificationResponse {
+    recipientId: number;
     message: string;
     classActivityId: number;
     notificationTime: string;

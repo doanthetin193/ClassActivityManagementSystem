@@ -1,1 +1,62 @@
-<p>notification works!</p>
+<div class="container-fluid py-4">
+	<div class="notification-page">
+		<div class="notification-page-header">
+			<h3 class="m-0">{{ 'NOTIFICATIONS' | translate }}</h3>
+			<div class="notification-header-actions">
+				<div class="notification-filter-group" role="tablist" aria-label="Notification filter">
+					<button
+						type="button"
+						class="notification-filter-btn"
+						[class.active]="selectedFilter === 'all'"
+						(click)="setFilter('all')"
+					>
+						{{ 'ALL' | translate }}
+					</button>
+					<button
+						type="button"
+						class="notification-filter-btn"
+						[class.active]="selectedFilter === 'unread'"
+						(click)="setFilter('unread')"
+					>
+						{{ 'UNREAD' | translate }}
+					</button>
+				</div>
+
+				<button type="button" class="btn btn-sm btn-outline-primary" (click)="markAllAsRead()">
+					{{ 'MARK_ALL_READ' | translate }}
+				</button>
+			</div>
+		</div>
+
+		<div class="notification-page-list">
+			<button
+				type="button"
+				class="notification-item"
+				*ngFor="let notification of filteredNotifications"
+				[class.unread]="!notification.read"
+				(click)="markOneAsRead(notification)"
+			>
+				<div class="notification-message">{{ notification.message }}</div>
+				<div class="notification-meta">
+					<span class="notification-time">{{ notification.notificationTime | relativeTime }}</span>
+					<span class="notification-unread-dot" *ngIf="!notification.read"></span>
+				</div>
+			</button>
+
+			<div class="notification-empty" *ngIf="!isLoading && filteredNotifications.length === 0">
+				{{ isUnreadFilter ? ('NO_UNREAD_NOTIFICATIONS' | translate) : ('NO_DATA' | translate) }}
+			</div>
+		</div>
+
+		<div class="notification-page-footer">
+			<button
+				type="button"
+				class="btn btn-sm btn-light"
+				(click)="loadMore()"
+				[disabled]="isLoading || isLastPage"
+			>
+				{{ isLoading ? ('LOADING' | translate) : (isLastPage ? ('NO_MORE_NOTIFICATIONS' | translate) : ('LOAD_MORE' | translate)) }}
+			</button>
+		</div>
+	</div>
+</div>

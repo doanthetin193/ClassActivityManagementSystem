@@ -3,8 +3,8 @@
   class="sidebar-reopen-btn"
   *ngIf="!isSidebarVisible"
   (click)="isSidebarVisible = true"
-  aria-label="Open sidebar"
-  title="Open menu"
+  [attr.aria-label]="'SIDEBAR_OPEN' | translate"
+  [title]="'SIDEBAR_OPEN_MENU' | translate"
 >
   <i class="bi bi-chevron-right"></i>
 </button>
@@ -12,11 +12,11 @@
 <div class="sidebar-shell">
   <aside class="app-sidebar sidebar-panel" [class.open]="isSidebarVisible" [class.collapsed]="!isSidebarVisible">
     <div class="sidebar-header-row">
-      <div class="sidebar-heading">Menu</div>
+      <div class="sidebar-heading">{{ 'SIDEBAR_MENU' | translate }}</div>
       <button
         class="sidebar-close-btn"
         (click)="isSidebarVisible = false"
-        aria-label="Close sidebar"
+        [attr.aria-label]="'SIDEBAR_CLOSE' | translate"
       >
         ✖
       </button>

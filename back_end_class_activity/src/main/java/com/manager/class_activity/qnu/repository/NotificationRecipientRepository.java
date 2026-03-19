@@ -14,9 +14,10 @@ import java.util.List;
 @Repository
 public interface NotificationRecipientRepository extends JpaRepository<NotificationRecipient, Integer> {
     List<NotificationRecipient> findByAccountAndIsRead(Account account, boolean b);
+    java.util.Optional<NotificationRecipient> findByIdAndAccount(Integer id, Account account);
 
     @Query("SELECT new com.manager.class_activity.qnu.dto.response.NotificationResponse" +
-            "(n.message, n.classActivity.id, n.notificationTime, " +
+            "(nr.id, n.message, n.classActivity.id, n.notificationTime, " +
             "nr.recipientType, nr.isRead) " +
             "FROM NotificationRecipient nr " +
             "JOIN nr.notification n " + 

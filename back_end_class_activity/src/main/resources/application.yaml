@@ -64,3 +64,24 @@ springdoc:
     path: /document/api-docs
   swagger-ui:
     path: /document/swagger-ui.html
+
+rate-limit:
+  enabled: ${RATE_LIMIT_ENABLED:true}
+  cleanup-threshold: ${RATE_LIMIT_CLEANUP_THRESHOLD:2000}
+  trusted-ips: ${RATE_LIMIT_TRUSTED_IPS:}
+  login:
+    enabled: ${RATE_LIMIT_LOGIN_ENABLED:true}
+    path: ${RATE_LIMIT_LOGIN_PATH:/auth/log-in}
+    max-requests: ${RATE_LIMIT_LOGIN_MAX_REQUESTS:30}
+    window-seconds: ${RATE_LIMIT_LOGIN_WINDOW_SECONDS:60}
+  roll-call:
+    enabled: ${RATE_LIMIT_ROLL_CALL_ENABLED:true}
+    path: ${RATE_LIMIT_ROLL_CALL_PATH:/attendance/roll-call}
+    max-requests: ${RATE_LIMIT_ROLL_CALL_MAX_REQUESTS:20}
+    window-seconds: ${RATE_LIMIT_ROLL_CALL_WINDOW_SECONDS:60}
+
+login-attempt:
+  enabled: ${LOGIN_ATTEMPT_ENABLED:true}
+  max-failures: ${LOGIN_ATTEMPT_MAX_FAILURES:5}
+  lock-seconds: ${LOGIN_ATTEMPT_LOCK_SECONDS:900}
+  reset-window-seconds: ${LOGIN_ATTEMPT_RESET_WINDOW_SECONDS:900}

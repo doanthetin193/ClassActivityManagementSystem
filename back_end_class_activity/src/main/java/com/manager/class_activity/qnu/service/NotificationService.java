@@ -112,6 +112,20 @@ public class NotificationService {
       log.info("All notifications marked as read for account ID: {}", account.getId());
    }
 
+   @Transactional
+   public void setIsReadOne(Integer recipientId) {
+      Account account = getCurrentAccount();
+
+      NotificationRecipient notificationRecipient = notificationRecipientRepository
+            .findByIdAndAccount(recipientId, account)
+         .orElseThrow(() -> new BadException(ErrorCode.NOTIFICATION_NOT_FOUND));
+
+      if (!notificationRecipient.isRead()) {
+         notificationRecipient.setRead(true);
+         notificationRecipientRepository.save(notificationRecipient);
+      }
+   }
+
    public PagedResponse<NotificationResponse> getNotification(CustomPageRequest<?> request) {
       Account account = getCurrentAccount();
       log.info("Fetching notifications for account ID: {}", account.getId());

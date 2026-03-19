@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificationResponse {
+    int recipientId;
     String message;
     int classActivityId;
     Timestamp notificationTime;

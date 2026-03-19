@@ -57,21 +57,56 @@ export class LayoutPrimaryComponent implements OnInit, OnDestroy {
   }
 
   toggleNotification(): void {
-    if(this.notiCount > 0){
-      this.notiService.setReadAll().subscribe({
-        next: (response) => {
-          if (response.code === 200) {
-            this.notiCount = 0;
-            this.websocketService.refreshNotiCount();
-          }
-        },
-        error: (error) => {
-          console.error('Error in setReadAll:', error); // Log lỗi để xác định nguồn gốc
-        }
-      });
+    if (!this.isPopupVisible) {
+      this.loadNotifications();
     }
-    this.loadNotifications();
     this.isPopupVisible = !this.isPopupVisible;
+  }
+
+  markAllNotificationsAsRead(event?: MouseEvent): void {
+    event?.stopPropagation();
+
+    if (this.notiCount <= 0) {
+      return;
+    }
+
+    this.notiService.setReadAll().subscribe({
+      next: (response) => {
+        if (response.code === 200) {
+          this.notifications = this.notifications.map((item) => ({ ...item, read: true }));
+          this.websocketService.refreshNotiCount();
+        }
+      },
+      error: (error) => {
+        console.error('Error in setReadAll:', error);
+      }
+    });
+  }
+
+  markNotificationAsRead(notification: NotificationResponse, event?: MouseEvent): void {
+    event?.stopPropagation();
+
+    if (notification.read) {
+      return;
+    }
+
+    this.notiService.setReadOne(notification.recipientId).subscribe({
+      next: (response) => {
+        if (response.code === 200) {
+          notification.read = true;
+          this.websocketService.refreshNotiCount();
+        }
+      },
+      error: (error) => {
+        console.error('Error in setReadOne:', error);
+      }
+    });
+  }
+
+  goToNotificationsPage(event?: MouseEvent): void {
+    event?.stopPropagation();
+    this.isPopupVisible = false;
+    this.router.navigate(['/notifications']);
   }
 
   closePopupOutside(event: MouseEvent): void {

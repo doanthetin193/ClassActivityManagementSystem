@@ -12,3 +12,6 @@ local:
 
 server:
   host: "http://localhost:8000/AMQNU/api"
+
+rate-limit:
+  enabled: ${RATE_LIMIT_ENABLED:true}

@@ -1,0 +1,112 @@
+.notification-page {
+	max-width: 900px;
+	margin: 0 auto;
+	background: var(--card-bg);
+	border: 1px solid var(--gray-200);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+}
+
+.notification-page-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem;
+	border-bottom: 1px solid var(--gray-200);
+}
+
+.notification-header-actions {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.notification-filter-group {
+	display: inline-flex;
+	padding: 0.15rem;
+	border-radius: 999px;
+	background: var(--gray-100);
+	border: 1px solid var(--gray-200);
+	gap: 0.2rem;
+}
+
+.notification-filter-btn {
+	border: none;
+	background: transparent;
+	color: var(--gray-600);
+	font-size: 0.78rem;
+	font-weight: 600;
+	padding: 0.3rem 0.75rem;
+	border-radius: 999px;
+	cursor: pointer;
+	transition: all var(--transition-fast);
+}
+
+.notification-filter-btn.active {
+	background: var(--card-bg);
+	color: var(--primary-700);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.notification-page-list {
+	max-height: 68vh;
+	overflow-y: auto;
+}
+
+.notification-item {
+	width: 100%;
+	text-align: left;
+	border: none;
+	border-bottom: 1px solid var(--gray-100);
+	background: transparent;
+	padding: 0.9rem 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	cursor: pointer;
+}
+
+.notification-item:hover {
+	background: var(--gray-50);
+}
+
+.notification-item.unread {
+	background: var(--primary-50);
+}
+
+.notification-message {
+	color: var(--gray-700);
+	font-size: 0.9rem;
+}
+
+.notification-meta {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	flex-shrink: 0;
+}
+
+.notification-time {
+	color: var(--gray-500);
+	font-size: 0.75rem;
+}
+
+.notification-unread-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 999px;
+	background: var(--primary-500);
+}
+
+.notification-empty {
+	padding: 1.5rem;
+	text-align: center;
+	color: var(--gray-500);
+}
+
+.notification-page-footer {
+	padding: 0.9rem 1rem;
+	border-top: 1px solid var(--gray-200);
+	text-align: center;
+}

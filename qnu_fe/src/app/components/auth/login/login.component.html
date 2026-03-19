@@ -7,11 +7,11 @@
       <!-- Brand -->
       <div class="login-brand">
         <div class="login-brand-icon">
-          <i class="bi bi-mortarboard-fill"></i>
+          <img class="login-brand-logo" src="assets/icons/logo.png" alt="QNU logo" />
         </div>
         <div>
-          <div class="login-brand-name">QNU System</div>
-          <div class="login-brand-sub">Class Activity Management</div>
+          <div class="login-brand-name">{{ 'LOGIN_BRAND_NAME' | translate }}</div>
+          <div class="login-brand-sub">{{ 'LOGIN_BRAND_SUB' | translate }}</div>
         </div>
       </div>
 
@@ -24,29 +24,31 @@
 
         <!-- Username -->
         <div class="form-group">
-          <label class="form-label" for="username">Username</label>
+          <label class="form-label" for="username">{{ 'USERNAME' | translate }}</label>
           <input
             pInputText
             class="qnu-input w-100"
             id="username"
             [(ngModel)]="username"
-            placeholder="Nhập tên đăng nhập..."
-            (keydown.enter)="onSubmit()"
+            [placeholder]="'LOGIN_USERNAME_PLACEHOLDER' | translate"
+            (keydown.enter)="!isLoginLocked && onSubmit()"
             autocomplete="username"
+            [disabled]="isLoginLocked"
           />
         </div>
 
         <!-- Password -->
         <div class="form-group mt-3">
-          <label class="form-label">Password</label>
+          <label class="form-label">{{ 'LOGIN_PASSWORD_LABEL' | translate }}</label>
           <p-password
             [(ngModel)]="password"
             [feedback]="false"
             toggleMask="true"
-            placeholder="Nhập mật khẩu..."
+            [placeholder]="'LOGIN_PASSWORD_PLACEHOLDER' | translate"
             styleClass="w-100"
             inputStyleClass="qnu-input w-100"
-            (keydown.enter)="onSubmit()"
+            (keydown.enter)="!isLoginLocked && onSubmit()"
+            [disabled]="isLoginLocked"
           />
         </div>
 
@@ -56,19 +58,35 @@
             <input class="form-check-input me-2" type="checkbox" id="rememberme"/>
             {{ 'REMEMBER_ME' | translate }}
           </label>
-          <a href="#" class="forgot-link">{{ 'FORGOT_PASSWORD' | translate }}</a>
+          <a href="#" class="forgot-link" (click)="onForgotPassword($event)">{{ 'FORGOT_PASSWORD' | translate }}</a>
+        </div>
+
+        <div *ngIf="showForgotPasswordGuide" class="forgot-help-alert mt-2">
+          <div class="forgot-help-title">{{ forgotPasswordGuideTitle }}</div>
+          <div class="forgot-help-text">{{ forgotPasswordGuideMessage }}</div>
         </div>
 
         <!-- Error alert -->
         <div *ngIf="error" class="login-error">
           <i class="bi bi-exclamation-circle-fill me-2"></i>
-          {{ errorMessage }}
+          <span *ngIf="isLoginLocked; else defaultErrorMsg">{{ 'LOGIN_TEMP_LOCKED' | translate }}</span>
+          <ng-template #defaultErrorMsg>{{ errorMessage }}</ng-template>
         </div>
 
         <!-- Submit -->
-        <button class="login-btn" (click)="onSubmit()">
-          <span>{{ 'LOGIN' | translate }}</span>
+        <button class="login-btn" (click)="onSubmit()" [disabled]="isLoginLocked">
+          <span *ngIf="!isLoginLocked">{{ 'LOGIN' | translate }}</span>
+          <span *ngIf="isLoginLocked">{{ 'LOGIN_RETRY_AFTER' | translate }} {{ formatSeconds(lockRemainingSeconds) }}</span>
           <i class="bi bi-arrow-right-circle-fill ms-2" style="font-size:1rem"></i>
+        </button>
+
+        <button
+          *ngIf="showDevResetButton"
+          type="button"
+          class="dev-reset-lock-btn"
+          (click)="onResetLockDev()"
+        >
+          {{ 'RESET_LOCK_DEV' | translate }}
         </button>
 
       </div>
@@ -81,16 +99,16 @@
       <div class="login-illustration">
         <img src="assets/images/login.png" alt="login illustration" class="login-img"/>
       </div>
-      <div class="login-right-title">Quản lý sinh hoạt lớp hiệu quả</div>
+      <div class="login-right-title">{{ 'LOGIN_RIGHT_TITLE' | translate }}</div>
       <div class="login-right-desc">
-        Hệ thống số hoá toàn bộ quy trình điểm danh,<br/>
-        thông báo và báo cáo hoạt động lớp học
+        {{ 'LOGIN_RIGHT_DESC_LINE1' | translate }}<br/>
+        {{ 'LOGIN_RIGHT_DESC_LINE2' | translate }}
       </div>
       <div class="login-features">
-        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> Điểm danh thông minh</span>
-        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> Thông báo real-time</span>
-        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> Báo cáo tự động</span>
-        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> Đa ngôn ngữ</span>
+        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> {{ 'LOGIN_FEATURE_ATTENDANCE' | translate }}</span>
+        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> {{ 'LOGIN_FEATURE_NOTIFICATION' | translate }}</span>
+        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> {{ 'LOGIN_FEATURE_REPORT' | translate }}</span>
+        <span class="login-chip"><i class="bi bi-check-circle-fill"></i> {{ 'LOGIN_FEATURE_MULTILANG' | translate }}</span>
       </div>
     </div>
   </div>

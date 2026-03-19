@@ -29,6 +29,12 @@ public class NotificationController {
         return JsonResponse.success("All notifications marked as read");
     }
 
+    @PutMapping("/read/{recipientId}")
+    public JsonResponse<String> markOneAsRead(@PathVariable Integer recipientId) {
+        notificationService.setIsReadOne(recipientId);
+        return JsonResponse.success("Notification marked as read");
+    }
+
     /**
      * Endpoint để lấy danh sách thông báo của người dùng
      *

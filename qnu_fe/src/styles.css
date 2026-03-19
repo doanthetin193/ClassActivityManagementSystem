@@ -616,7 +616,8 @@ body {
   position: absolute;
   top: 48px;
   right: 0;
-  width: 320px;
+  width: min(320px, calc(100vw - 24px));
+  max-width: 320px;
   background-color: var(--card-bg);
   box-shadow: 0 8px 30px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
   border-radius: var(--radius-lg);
@@ -638,21 +639,62 @@ body {
 
 .notification-popup h4 {
   margin: 0;
-  padding: 0.85rem 1rem;
+  padding: 0.78rem 0.9rem;
   background: linear-gradient(135deg, var(--primary-600), var(--primary-800));
   color: white;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
+.notification-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem;
+  border-bottom: 1px solid var(--gray-100);
+  background: linear-gradient(180deg, var(--gray-50), rgba(255, 255, 255, 0));
+}
+
+.notification-action-btn {
+  border: 1px solid var(--gray-200);
+  background: var(--card-bg);
+  color: var(--gray-700);
+  border-radius: 10px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1;
+  min-height: 34px;
+  padding: 0.42rem 0.45rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notification-action-btn:hover {
+  border-color: var(--primary-300);
+  color: var(--primary-700);
+  background: var(--primary-50);
+}
+
+.notification-action-btn i {
+  font-size: 0.78rem;
+}
+
 .notification-popup ul {
   list-style: none;
   margin: 0;
-  padding: 0.3rem 0;
-  max-height: 320px;
+  padding: 0.2rem 0;
+  max-height: 260px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -667,7 +709,7 @@ body {
 }
 
 .notification-popup ul li {
-  padding: 0.7rem 1rem;
+  padding: 0.65rem 0.9rem;
   border-bottom: 1px solid var(--gray-100);
   display: flex;
   justify-content: space-between;
@@ -681,12 +723,22 @@ body {
   border-bottom: none;
 }
 
-.notification-popup ul li:hover {
-  background-color: var(--gray-50);
+.notification-popup ul li.read {
+  background: #fcfdff;
 }
 
 .notification-popup ul li.unread {
-  background: var(--primary-50);
+  background: linear-gradient(90deg, rgba(79, 70, 229, 0.1), rgba(79, 70, 229, 0.03));
+  border-left: 3px solid var(--primary-500);
+  padding-left: calc(0.9rem - 3px);
+}
+
+.notification-popup ul li.read:hover {
+  background-color: #f6f8fc;
+}
+
+.notification-popup ul li.unread:hover {
+  background: linear-gradient(90deg, rgba(79, 70, 229, 0.14), rgba(79, 70, 229, 0.05));
 }
 
 .unread-indicator {
@@ -709,6 +761,47 @@ body {
   font-size: 0.7rem;
   color: var(--gray-400);
   white-space: nowrap;
+}
+
+.notification-empty {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--gray-400);
+  font-size: 0.82rem;
+  text-align: center;
+  gap: 0.45rem;
+}
+
+.notification-empty i {
+  font-size: 1.6rem;
+  opacity: 0.45;
+}
+
+.notification-popup ul li.notification-empty {
+  justify-content: center;
+  align-items: center;
+  border-bottom: none;
+  background: transparent;
+  cursor: default;
+  width: 100%;
+}
+
+@media (max-width: 576px) {
+  .notification-popup {
+    right: -8px;
+    width: min(300px, calc(100vw - 16px));
+  }
+
+  .notification-popup h4 {
+    font-size: 0.88rem;
+  }
+
+  .notification-action-btn {
+    font-size: 0.7rem;
+  }
 }
 
 /* ============================================================
@@ -1246,6 +1339,33 @@ body {
 :root[data-theme='dark'] .table-footer {
   background: linear-gradient(180deg, #0f1a2d 0%, #0d1628 100%) !important;
   border-top-color: #23344f !important;
+}
+
+:root[data-theme='dark'] .card {
+  background: var(--card-bg) !important;
+  border-color: #24344f !important;
+  color: #d8e4f8;
+}
+
+:root[data-theme='dark'] .bg-white {
+  background-color: #0f1a2d !important;
+  color: #d8e4f8 !important;
+}
+
+:root[data-theme='dark'] .table {
+  --bs-table-bg: #0f1a2d;
+  --bs-table-color: #d2e0f5;
+  --bs-table-border-color: #223452;
+  --bs-table-striped-bg: #13213a;
+  --bs-table-striped-color: #dce8fb;
+  --bs-table-hover-bg: #172741;
+  --bs-table-hover-color: #e9f1ff;
+}
+
+:root[data-theme='dark'] .table > :not(caption) > * > * {
+  background-color: var(--bs-table-bg) !important;
+  color: var(--bs-table-color) !important;
+  border-bottom-color: var(--bs-table-border-color) !important;
 }
 
 :root[data-theme='dark'] .qnu-table thead th,

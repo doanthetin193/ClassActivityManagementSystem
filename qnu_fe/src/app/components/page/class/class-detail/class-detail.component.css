@@ -1,0 +1,91 @@
+.class-detail-page {
+	color: var(--gray-800);
+}
+
+.class-detail-table-wrap {
+	background: #ffffff;
+	border: 1px solid var(--gray-200);
+}
+
+.class-detail-table {
+	margin-bottom: 0;
+}
+
+.class-detail-thead th {
+	background: #f8fafc;
+	color: #1f2937;
+	font-weight: 700;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.class-detail-table tbody td {
+	color: #1f2937;
+}
+
+.class-detail-search-input,
+.class-detail-search-btn {
+	background: #ffffff !important;
+}
+
+.class-detail-pagination {
+	color: var(--gray-700);
+}
+
+:host-context([data-theme='dark']) .class-detail-page {
+	color: #dbe7ff;
+}
+
+:host-context([data-theme='dark']) .class-detail-breadcrumb .fs-4 {
+	color: #dbe7ff;
+}
+
+:host-context([data-theme='dark']) .class-detail-search-input {
+	background: #0f1a2d !important;
+	color: #e6eefc !important;
+	border-color: #2b3f5d !important;
+}
+
+:host-context([data-theme='dark']) .class-detail-search-input::placeholder {
+	color: #8da3c8;
+}
+
+:host-context([data-theme='dark']) .class-detail-search-btn {
+	background: #0f1a2d !important;
+	color: #b6c7e6 !important;
+	border-color: #2b3f5d !important;
+}
+
+:host-context([data-theme='dark']) .class-detail-table-wrap {
+	background: #0f1a2d;
+	border-color: #263a58;
+	box-shadow: inset 0 0 0 1px rgba(61, 88, 128, 0.2);
+}
+
+:host-context([data-theme='dark']) .class-detail-table {
+	--bs-table-bg: #0f1a2d;
+	--bs-table-color: #d3e2fd;
+	--bs-table-border-color: #223452;
+	--bs-table-hover-bg: #172741;
+	--bs-table-hover-color: #e9f1ff;
+}
+
+:host-context([data-theme='dark']) .class-detail-thead th {
+	background: #14233a;
+	color: #d9e6ff;
+	border-bottom-color: #2a3f5f;
+}
+
+:host-context([data-theme='dark']) .class-detail-table tbody td {
+	color: #d3e2fd !important;
+	background: #0f1a2d !important;
+	border-color: #223452 !important;
+}
+
+:host-context([data-theme='dark']) .class-detail-table.table-hover tbody tr:hover td,
+:host-context([data-theme='dark']) .class-detail-table.table-hover tbody tr:hover th {
+	background: #172741 !important;
+}
+
+:host-context([data-theme='dark']) .class-detail-pagination {
+	color: #c1d4f5;
+}

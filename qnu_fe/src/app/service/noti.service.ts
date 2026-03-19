@@ -23,4 +23,8 @@ export class NotiService {
   public setReadAll(): Observable<JsonResponse<string>>{
     return this.http.put<JsonResponse<string>>(`${this.baseUrl}/read-all`,null);
   }
+
+  public setReadOne(recipientId: number): Observable<JsonResponse<string>> {
+    return this.http.put<JsonResponse<string>>(`${this.baseUrl}/read/${recipientId}`, null);
+  }
 }
