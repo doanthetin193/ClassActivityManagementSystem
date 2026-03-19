@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Inject, PLATFORM_ID } from '@angular/core';
 import { AuthService } from './service/auth.service';
 import { WebSocketService } from './service/websocket.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +44,8 @@ export class AppComponent implements OnInit {
     private websocketService: WebSocketService,
     private translateService: TranslateService,
     private titleService: Title,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
   }
 
@@ -61,7 +64,9 @@ export class AppComponent implements OnInit {
   }
 
   private initLanguage(): void {
-    const savedLanguage = localStorage.getItem('language') || 'vi';
+    const savedLanguage = isPlatformBrowser(this.platformId)
+      ? localStorage.getItem('language') || 'vi'
+      : 'vi';
     this.translateService.setDefaultLang('vi');
     this.translateService.use(savedLanguage);
   }
