@@ -96,7 +96,8 @@ export class ActivityAddComponent implements OnInit {
       },
       error => {
         this.isLoading = false;
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'An error occurred', life: 3000 });
+        const detail = error?.error?.message || 'An error occurred';
+        this.messageService.add({ severity: 'error', summary: 'Error', detail, life: 4000 });
       }
     );
   }
@@ -117,7 +118,8 @@ export class ActivityAddComponent implements OnInit {
       },
       error => {
         this.isLoading = false;
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'An error occurred', life: 3000 });
+        const detail = error?.error?.message || 'An error occurred';
+        this.messageService.add({ severity: 'error', summary: 'Error', detail, life: 4000 });
       }
     );
   }
@@ -139,7 +141,8 @@ export class ActivityAddComponent implements OnInit {
       error => {
         this.isLoading = false;
         console.error('Upload failed:', error);
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'An error occurred', life: 3000 });
+        const detail = error?.error?.message || 'An error occurred';
+        this.messageService.add({ severity: 'error', summary: 'Error', detail, life: 4000 });
       }
     );
   }

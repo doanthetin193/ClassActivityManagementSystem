@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
 @Log4j2
@@ -23,12 +25,15 @@ public class LocalStorageService {
     String serverHost;  // Địa chỉ của server, ví dụ: "http://localhost:8080"
 
     public CompletableFuture<String> uploadPdfAsync(MultipartFile file) {
-        if (file == null || file.isEmpty() || !file.getOriginalFilename().endsWith(".pdf")) {
+        if (file == null || file.isEmpty() || !isPdfFile(file)) {
             throw new BadException(ErrorCode.INVALID_FILE);
         }
 
         File pdfFile = null;
         try {
+            Path storageDir = Path.of(storagePath);
+            Files.createDirectories(storageDir);
+
             // Chuyển MultipartFile sang File
             pdfFile = convertToFile(file);
 
@@ -81,5 +86,10 @@ public class LocalStorageService {
             fos.write(file.getBytes());
         }
         return convFile;
+    }
+
+    private boolean isPdfFile(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        return fileName != null && fileName.toLowerCase().endsWith(".pdf");
     }
 }
