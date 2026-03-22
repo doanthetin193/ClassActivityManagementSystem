@@ -53,7 +53,11 @@ export class WebSocketService {
     }
 
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const socketUrl = `${protocol}://${environment.socketURL}?token=${token}`;
+    const encodedToken = encodeURIComponent(token);
+    const socketBaseUrl = /^(ws|wss):\/\//.test(environment.socketURL)
+      ? environment.socketURL
+      : `${protocol}://${environment.socketURL}`;
+    const socketUrl = `${socketBaseUrl}?token=${encodedToken}`;
     this.socket = new WebSocket(socketUrl);
 
     this.socket.onopen = () => {
