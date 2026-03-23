@@ -84,6 +84,17 @@ Khuyến nghị:
 - Dùng biến môi trường để ghi đè cấu hình nhạy cảm trước khi deploy.
 - Không để secret thật trong file cấu hình production.
 
+Thiết lập secret local an toàn (không push lên GitHub):
+- Backend đã hỗ trợ nạp file `back_end_class_activity/.env.local.properties` khi chạy profile `dev`.
+- Tạo file local từ mẫu: `back_end_class_activity/.env.local.properties.example`.
+- Điền key thật vào file local, ví dụ:
+  - `CLOUDINARY_CLOUD_NAME=...`
+  - `CLOUDINARY_API_KEY=...`
+  - `CLOUDINARY_API_SECRET=...`
+  - `GROQ_API_KEY=...`
+- File `.env.local.properties` đã được ignore trong git nên không bị push nếu thao tác bình thường.
+- Trên môi trường deploy (DigitalOcean), cấu hình các key này bằng Environment Variables thay vì lưu trong source code.
+
 ### 6.2 Frontend
 
 File cấu hình môi trường:

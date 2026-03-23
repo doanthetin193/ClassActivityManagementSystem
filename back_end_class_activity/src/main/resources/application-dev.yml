@@ -1,3 +1,7 @@
+spring:
+  config:
+    import: optional:file:./.env.local.properties
+
 jwt:
   signerKey: "EIG2ryG3InsGo7mStNgivMrw2/OpHD4UrBJUPwkSWacWJaEztRuqsr/axSiuCTxZ"
 
