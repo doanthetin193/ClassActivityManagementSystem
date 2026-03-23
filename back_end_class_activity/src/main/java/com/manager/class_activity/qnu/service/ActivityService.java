@@ -37,7 +37,10 @@ public class ActivityService {
                 .format(java.time.format.DateTimeFormatter.ofPattern("MM/yyyy"));
         Activity activity = activityRepository.findByNameAndIsDeleted(currentMonthYear, false);
         if (ObjectUtils.isNotEmpty(activity)) {
-            throw new BadException(ErrorCode.ACTIVITY_EXIST);
+            for (FileRequest file: files) {
+                activityGuideService.createActivityGuide(file, activity);
+            }
+            return;
         }
         activity = Activity.builder()
                 .name(currentMonthYear)

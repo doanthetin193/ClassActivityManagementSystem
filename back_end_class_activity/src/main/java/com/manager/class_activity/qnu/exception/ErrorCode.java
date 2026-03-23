@@ -62,7 +62,10 @@ public enum ErrorCode {
     ATTENDANCE_SESSION_IS_END(1052, "Attendance session is end", HttpStatus.GONE),
     ATTENDANCE_SESSION_NOT_FOUND(1053, "Attendance session not found", HttpStatus.NOT_FOUND),
     TOO_MANY_REQUESTS(1054, "Too many requests. Please try again later.", HttpStatus.TOO_MANY_REQUESTS),
-    NOTIFICATION_NOT_FOUND(1055, "Notification not found", HttpStatus.NOT_FOUND);
+    NOTIFICATION_NOT_FOUND(1055, "Notification not found", HttpStatus.NOT_FOUND),
+    AI_NOT_CONFIGURED(1056, "AI service is not configured", HttpStatus.SERVICE_UNAVAILABLE),
+    AI_PROVIDER_ERROR(1057, "AI provider error", HttpStatus.BAD_GATEWAY),
+    GUIDE_CONTENT_EMPTY(1058, "No readable guide content found", HttpStatus.BAD_REQUEST);
 
     private final int code;
     private final String message;

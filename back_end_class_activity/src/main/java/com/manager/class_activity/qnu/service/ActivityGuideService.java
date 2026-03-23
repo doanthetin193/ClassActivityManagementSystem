@@ -33,7 +33,6 @@ import java.util.concurrent.ExecutionException;
 public class ActivityGuideService {
     ActivityGuideRepository activityGuideRepository;
     CloudinaryService cloudinaryService;
-    LocalStorageService localStorageService;
     ClassActivityRepository classActivityRepository;
     ActivityGuideMapper activityGuideMapper;
     DepartmentActivityGuideRepository departmentActivityGuideRepository;
@@ -48,7 +47,7 @@ public class ActivityGuideService {
 
         try {
             // Upload file lên Cloudinary
-            String pdfUrl = localStorageService.uploadPdfAsync(request.getFile()).get();
+            String pdfUrl = cloudinaryService.uploadPdfAsync(request.getFile()).get();
 
             // Tạo đối tượng ActivityGuide
             ActivityGuide activityGuide = ActivityGuide.builder()
@@ -114,7 +113,7 @@ public class ActivityGuideService {
                             .createdAt(item.getCreatedAt())
                             .id(item.getId())
                             .isDepartment(false)
-                            .url(item.getPdfUrl())
+                            .url(cloudinaryService.ensureAccessiblePdfUrl(item.getPdfUrl()))
                             .name(item.getName())
                     .build());
         }
@@ -128,7 +127,7 @@ public class ActivityGuideService {
                             .createdAt(de.getCreatedAt())
                             .updatedAt(de.getUpdatedAt())
                             .name(de.getName())
-                            .url(de.getPdfUrl())
+                            .url(cloudinaryService.ensureAccessiblePdfUrl(de.getPdfUrl()))
                     .build());
         }
         return rs;

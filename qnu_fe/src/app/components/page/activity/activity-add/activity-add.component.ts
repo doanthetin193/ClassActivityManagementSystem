@@ -90,6 +90,7 @@ export class ActivityAddComponent implements OnInit {
           this.files = [];
           this.totalSize = 0;
           this.totalSizePercent = 0;
+          this.router.navigate(['activity']);
         } else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'File upload failed', life: 3000 });
         }
@@ -112,6 +113,7 @@ export class ActivityAddComponent implements OnInit {
           this.files = [];
           this.totalSize = 0;
           this.totalSizePercent = 0;
+          this.router.navigate(['activity', this.idActivity]);
         } else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'File upload failed', life: 3000 });
         }
@@ -134,6 +136,7 @@ export class ActivityAddComponent implements OnInit {
           this.files = [];
           this.totalSize = 0;
           this.totalSizePercent = 0;
+          this.router.navigate(['activity', this.idActivity]);
         } else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'File upload failed', life: 3000 });
         }

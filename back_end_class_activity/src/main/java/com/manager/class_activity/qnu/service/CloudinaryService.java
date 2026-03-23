@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -58,12 +59,19 @@ public class CloudinaryService {
             Map<String, Object> params = ObjectUtils.asMap(
                     "resource_type", "raw",
                     "folder", "pdf_files",
-                    "type", "upload"
+                    "type", "upload",
+                    "access_mode", "public"
             );
 
             // Upload file lên Cloudinary
             Map<String, Object> uploadResult = cloudinary.uploader().upload(pdfFile, params);
-            String fileUrl = (String) uploadResult.get("url");
+            String secureUrl = (String) uploadResult.get("secure_url");
+            String url = (String) uploadResult.get("url");
+
+            String fileUrl = (secureUrl != null && !secureUrl.isBlank()) ? secureUrl : url;
+            if (fileUrl == null || fileUrl.isBlank()) {
+                throw new BadException(ErrorCode.UPLOAD_ERROR);
+            }
 
             log.info("Upload successful! File URL: {}", fileUrl);
             return CompletableFuture.completedFuture(fileUrl);
@@ -87,6 +95,73 @@ public class CloudinaryService {
             fos.write(file.getBytes());
         }
         return convFile;
+    }
+
+    public String ensureAccessiblePdfUrl(String rawUrl) {
+        if (rawUrl == null || rawUrl.isBlank()) {
+            return rawUrl;
+        }
+        try {
+            String cloudinaryRawSegment = "/" + cloudName + "/raw/upload/";
+            if (!rawUrl.contains("res.cloudinary.com") || !rawUrl.contains(cloudinaryRawSegment)) {
+                return rawUrl;
+            }
+
+            String path = URI.create(rawUrl).getPath();
+            int markerIndex = path.indexOf(cloudinaryRawSegment);
+            if (markerIndex < 0) {
+                return rawUrl;
+            }
+
+            String tail = path.substring(markerIndex + cloudinaryRawSegment.length());
+
+            // Remove delivery signature segment if present: s--xxxx--/v123/... -> v123/...
+            if (tail.startsWith("s--")) {
+                int slash = tail.indexOf('/');
+                if (slash > 0) {
+                    tail = tail.substring(slash + 1);
+                }
+            }
+
+            String versionSegment = null;
+            if (tail.startsWith("v")) {
+                int slash = tail.indexOf('/');
+                if (slash > 0) {
+                    versionSegment = tail.substring(0, slash);
+                    tail = tail.substring(slash + 1);
+                }
+            }
+
+            if (tail.isBlank()) {
+                return rawUrl;
+            }
+
+            String publicId = tail;
+
+            // If URL already has a real version, keep it stable and unsigned.
+            if (versionSegment != null && !"v1".equals(versionSegment)) {
+                return cloudinary.url()
+                        .secure(true)
+                        .resourceType("raw")
+                        .type("upload")
+                        .version(versionSegment.substring(1))
+                        .generate(publicId);
+            }
+
+            // Fallback for old/invalid v1 links: query Cloudinary metadata to get exact secure_url.
+            Map resource = cloudinary.api().resource(
+                    publicId,
+                    ObjectUtils.asMap("resource_type", "raw", "type", "upload")
+            );
+            String secureUrl = (String) resource.get("secure_url");
+            if (secureUrl != null && !secureUrl.isBlank()) {
+                return secureUrl;
+            }
+
+            return rawUrl;
+        } catch (Exception ignored) {
+            return rawUrl;
+        }
     }
 
 }

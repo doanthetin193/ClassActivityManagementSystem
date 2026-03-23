@@ -196,6 +196,14 @@
     "HOME_STAT_NOTIFICATION": "通知",
     "HOME_STAT_NOTIFICATION_DESC": "实时 WebSocket 通知",
     "HOME_ABOUT_SYSTEM": "关于系统",
-    "HOME_VISION": "愿景"
+    "HOME_VISION": "愿景",
+    "AI_QUICK_TITLE": "文档快速问答",
+    "AI_QUICK_DESC": "输入问题，系统将读取现有指南并用 AI 回答。",
+    "AI_QUICK_PLACEHOLDER": "例如：第一次班会需要准备什么？",
+    "AI_QUICK_ASK_BUTTON": "询问 AI",
+    "AI_QUICK_ASKING": "正在回答...",
+    "AI_QUICK_ANSWER_LABEL": "回答：",
+    "AI_QUICK_REFERENCE_LABEL": "参考文档：",
+    "AI_QUICK_ERROR": "暂时无法获取答案，请稍后重试。"
   }
   

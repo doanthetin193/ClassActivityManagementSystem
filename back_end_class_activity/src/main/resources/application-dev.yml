@@ -2,9 +2,9 @@ jwt:
   signerKey: "EIG2ryG3InsGo7mStNgivMrw2/OpHD4UrBJUPwkSWacWJaEztRuqsr/axSiuCTxZ"
 
 cloudinary:
-  cloud_name: djpmekvyd
-  api_key: 486573992241243
-  api_secret: LYzIUMOY4JIpbjHZgJB5seZUTSk
+  cloud_name: ${CLOUDINARY_CLOUD_NAME:djpmekvyd}
+  api_key: ${CLOUDINARY_API_KEY:486573992241243}
+  api_secret: ${CLOUDINARY_API_SECRET}
 
 local:
   storage:

@@ -216,6 +216,14 @@
     "HOME_STAT_NOTIFICATION": "Thông báo",
     "HOME_STAT_NOTIFICATION_DESC": "Thông báo WebSocket theo thời gian thực",
     "HOME_ABOUT_SYSTEM": "Về hệ thống",
-    "HOME_VISION": "Tầm nhìn"
+    "HOME_VISION": "Tầm nhìn",
+    "AI_QUICK_TITLE": "Hỏi đáp nhanh về tài liệu",
+    "AI_QUICK_DESC": "Đặt câu hỏi, hệ thống sẽ đọc các hướng dẫn hiện có và trả lời bằng AI.",
+    "AI_QUICK_PLACEHOLDER": "Ví dụ: Buổi sinh hoạt đầu khóa cần chuẩn bị những gì?",
+    "AI_QUICK_ASK_BUTTON": "Hỏi AI",
+    "AI_QUICK_ASKING": "Đang trả lời...",
+    "AI_QUICK_ANSWER_LABEL": "Trả lời:",
+    "AI_QUICK_REFERENCE_LABEL": "Tài liệu đã tham chiếu:",
+    "AI_QUICK_ERROR": "Không thể lấy câu trả lời lúc này. Vui lòng thử lại."
   }
   

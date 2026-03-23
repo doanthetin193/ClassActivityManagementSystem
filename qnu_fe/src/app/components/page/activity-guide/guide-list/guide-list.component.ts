@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../service/auth.service';
 import { ActivityViewService } from '../../../../service/activity-view.service';
+import { ActivityGuideQaResponse } from '../../../../dto/response/activity-guide-qa-response';
 
 declare var bootstrap: any;
 ActivityGuideService;
@@ -27,6 +28,10 @@ export class GuideListComponent implements OnInit {
   isDetail: boolean = false;
   activityId: number | null = null;
   role: string = '';
+  qaQuestion: string = '';
+  qaLoading: boolean = false;
+  qaResult: ActivityGuideQaResponse | null = null;
+  qaErrorKey: string = '';
 
   constructor(
     private activityGuideService: ActivityGuideService,
@@ -129,7 +134,14 @@ export class GuideListComponent implements OnInit {
     this.activityGuideService.deleteGuide(id).subscribe((response) => {
       if (response.code === 200) {
         this.toastr.success('Advisor deleted successfully');
-        this.loadGuides({ page: this.page, rows: this.rows });
+        this.activityGuides = this.activityGuides.filter((item) => item.id !== id);
+        this.totalRecords = Math.max(0, this.totalRecords - 1);
+
+        if (this.isDetail && this.activityId) {
+          this.loadGuidesActivity(this.activityId);
+        } else {
+          this.loadGuides({ page: this.page, rows: this.rows });
+        }
       }
     });
   }
@@ -140,6 +152,34 @@ export class GuideListComponent implements OnInit {
 
   isActive(url: string): boolean {
     return this.router.url.startsWith(url);
+  }
+
+  askQuestion(): void {
+    if (!this.activityId || !this.qaQuestion.trim()) {
+      return;
+    }
+
+    this.qaLoading = true;
+    this.qaErrorKey = '';
+
+    this.activityGuideService.askQuestion({
+      activityId: this.activityId,
+      question: this.qaQuestion.trim(),
+    }).subscribe({
+      next: (response) => {
+        if (response.code === 200 && response.result) {
+          this.qaResult = response.result;
+          return;
+        }
+        this.qaErrorKey = 'AI_QUICK_ERROR';
+      },
+      error: () => {
+        this.qaErrorKey = 'AI_QUICK_ERROR';
+      },
+      complete: () => {
+        this.qaLoading = false;
+      }
+    });
   }
 
 }

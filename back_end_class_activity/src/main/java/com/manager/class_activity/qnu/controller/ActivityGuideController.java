@@ -3,11 +3,15 @@ package com.manager.class_activity.qnu.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.manager.class_activity.qnu.dto.request.ActivityGuideQaRequest;
 import com.manager.class_activity.qnu.dto.request.FileRequest;
 import com.manager.class_activity.qnu.dto.request.Filter;
 import com.manager.class_activity.qnu.dto.response.*;
 import com.manager.class_activity.qnu.entity.Activity;
+import com.manager.class_activity.qnu.exception.BadException;
+import com.manager.class_activity.qnu.exception.ErrorCode;
 import com.manager.class_activity.qnu.helper.CustomPageRequest;
+import com.manager.class_activity.qnu.service.ActivityGuideQaService;
 import com.manager.class_activity.qnu.service.ActivityGuideService;
 import com.manager.class_activity.qnu.service.ActivityService;
 import lombok.AccessLevel;
@@ -25,6 +29,7 @@ import java.util.List;
 public class ActivityGuideController {
     ActivityGuideService activityGuideService;
     ActivityService activityService;
+    ActivityGuideQaService activityGuideQaService;
 
     @PostMapping("/get-guides")
     public JsonResponse<PagedResponse<GuideResponse>> searchClasses(@RequestBody CustomPageRequest<Filter> request) {
@@ -67,6 +72,16 @@ public class ActivityGuideController {
     @GetMapping("/get-all-guide/{id}")
     public JsonResponse<List<GuideResponse>> getAllGuide(@PathVariable int id) {
         return JsonResponse.success(activityGuideService.getAllActivityGuides(id));
+    }
+
+    @PostMapping("/qa")
+    public JsonResponse<ActivityGuideQaResponse> askQuestion(@RequestBody ActivityGuideQaRequest request) {
+        if (request == null || request.getActivityId() == null || request.getQuestion() == null) {
+            throw new BadException(ErrorCode.INVALID_KEY);
+        }
+        return JsonResponse.success(
+                activityGuideQaService.answer(request.getActivityId(), request.getQuestion())
+        );
     }
 
 

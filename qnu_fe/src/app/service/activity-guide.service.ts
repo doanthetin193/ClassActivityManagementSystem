@@ -5,6 +5,8 @@ import { JsonResponse } from '../dto/response/json-response';
 import { PagedResponse } from '../dto/response/paged-response';
 import { ActivityGuideResponse } from '../dto/response/activity-guide-response';
 import { environment } from '../../environments/environment';
+import { ActivityGuideQaRequest } from '../dto/request/activity-guide-qa-request';
+import { ActivityGuideQaResponse } from '../dto/response/activity-guide-qa-response';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +39,13 @@ export class ActivityGuideService {
   deleteGuide(id: number): Observable<JsonResponse<string>> {
     return this.http.delete<JsonResponse<string>>(
       `${this.baseUrl}/${id}`
+    );
+  }
+
+  askQuestion(request: ActivityGuideQaRequest): Observable<JsonResponse<ActivityGuideQaResponse>> {
+    return this.http.post<JsonResponse<ActivityGuideQaResponse>>(
+      `${this.baseUrl}/qa`,
+      request
     );
   }
 }

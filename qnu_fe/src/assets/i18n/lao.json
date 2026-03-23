@@ -198,6 +198,14 @@
   "HOME_STAT_NOTIFICATION": "ແຈ້ງເຕືອນ",
   "HOME_STAT_NOTIFICATION_DESC": "ການແຈ້ງເຕືອນ WebSocket ແບບເວລາຈິງ",
   "HOME_ABOUT_SYSTEM": "ກ່ຽວກັບລະບົບ",
-  "HOME_VISION": "ວິໄສທັດ"
+  "HOME_VISION": "ວິໄສທັດ",
+  "AI_QUICK_TITLE": "ຖາມ-ຕອບໄວກ່ຽວກັບເອກະສານ",
+  "AI_QUICK_DESC": "ພິມຄຳຖາມ ແລະ ລະບົບຈະອ່ານຄູ່ມືທີ່ມີຢູ່ເພື່ອຕອບດ້ວຍ AI.",
+  "AI_QUICK_PLACEHOLDER": "ຕົວຢ່າງ: ກ່ອນກິດຈະກໍາຫ້ອງຄັ້ງທຳອິດຕ້ອງກຽມຫຍັງແດ່?",
+  "AI_QUICK_ASK_BUTTON": "ຖາມ AI",
+  "AI_QUICK_ASKING": "ກຳລັງຕອບ...",
+  "AI_QUICK_ANSWER_LABEL": "ຄຳຕອບ:",
+  "AI_QUICK_REFERENCE_LABEL": "ເອກະສານທີ່ອ້າງອີງ:",
+  "AI_QUICK_ERROR": "ບໍ່ສາມາດຮັບຄຳຕອບໄດ້ໃນຂະນະນີ້. ກະລຸນາລອງໃໝ່."
   }
   

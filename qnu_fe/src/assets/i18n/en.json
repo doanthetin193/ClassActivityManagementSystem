@@ -218,6 +218,14 @@
     "HOME_STAT_NOTIFICATION": "Notifications",
     "HOME_STAT_NOTIFICATION_DESC": "Real-time WebSocket notifications",
     "HOME_ABOUT_SYSTEM": "About the System",
-    "HOME_VISION": "Vision"
+    "HOME_VISION": "Vision",
+    "AI_QUICK_TITLE": "Quick Q&A for documents",
+    "AI_QUICK_DESC": "Ask a question and the system will read available guides to answer with AI.",
+    "AI_QUICK_PLACEHOLDER": "Example: What should we prepare for the first class activity session?",
+    "AI_QUICK_ASK_BUTTON": "Ask AI",
+    "AI_QUICK_ASKING": "Answering...",
+    "AI_QUICK_ANSWER_LABEL": "Answer:",
+    "AI_QUICK_REFERENCE_LABEL": "Referenced documents:",
+    "AI_QUICK_ERROR": "Unable to get an answer right now. Please try again."
   }
   
