@@ -4,6 +4,8 @@
 
 Bộ 5 tài khoản hiện tại là **đủ để demo gần như toàn bộ website**.
 
+Lưu ý xác thực theo mã nguồn: danh sách 5 tài khoản bên dưới là dữ liệu của **môi trường demo hiện tại** (database runtime), không phải seed cố định trong migration của source code.
+
 Cụ thể, bạn có thể demo được:
 - Đăng nhập và phân quyền nhiều cấp
 - Bảo mật đăng nhập nâng cao (rate limit + khóa tạm thời)
@@ -25,6 +27,7 @@ Cụ thể, bạn có thể demo được:
 - Đã triển khai cơ chế hybrid:
 	- Giới hạn tần suất request đăng nhập (burst rate limit)
 	- Khóa tạm thời theo số lần nhập sai liên tiếp
+- Rate limit hiện đang áp dụng cho cả endpoint login và endpoint roll-call (`/attendance/roll-call`)
 - Khi đăng nhập đúng, bộ đếm sai sẽ được reset
 - Frontend có hiển thị trạng thái khóa tạm thời và thời gian thử lại
 - Có nút reset lock cho môi trường dev để test nhanh trước giờ demo
@@ -38,19 +41,45 @@ Cụ thể, bạn có thể demo được:
 ### 3. Thông báo hoàn chỉnh để demo
 
 - Chuông thông báo realtime (WebSocket)
+- WebSocket dùng endpoint `/ws/notifications` và truyền JWT qua query `?token=...`
 - Popup thông báo có:
 	- Đánh dấu đã đọc từng mục
 	- Đánh dấu đã đọc tất cả
 	- Xem tất cả
 - Trang thông báo riêng có phân trang, lọc All/Unread, thao tác read one/read all
 
-### 4. Đồng bộ giao diện và i18n
+### 4. Đồng bộ đúng code cho quản lý tài khoản
+
+- Reset password:
+	- Nếu để trống mật khẩu mới, hệ thống reset về mặc định = username
+- Khóa tài khoản:
+	- Dùng soft delete (`isDeleted = true`)
+	- Không cho phép SuperAdmin tự khóa chính tài khoản đang đăng nhập
+- Mở khóa tài khoản:
+	- Chỉ mở khóa tài khoản đang ở trạng thái đã khóa (`isDeleted = true`)
+
+### 5. Đồng bộ đúng code cho điểm danh
+
+- Khi tạo phiên điểm danh, hệ thống tạo mã 6 số và khởi tạo trạng thái mặc định `Absent`
+- Roll-call hợp lệ khi mã đúng và còn hạn theo mốc `updatedAt + 30 giây`
+- Nếu điểm danh sau mốc thời gian quy định của buổi sinh hoạt, trạng thái được ghi nhận là `Late`
+- StudentAdmin có thể renew mã điểm danh khi cần
+
+## Mục đã đối chiếu trực tiếp với mã nguồn
+
+- NotificationController/NotificationService/WebSocket đã có đủ: `get-notifications`, `count`, `read/{recipientId}`, `read-all`, push realtime theo username session
+- Login flow đã có đủ header cho frontend demo: `Retry-After`, `X-Login-Attempts-Remaining`
+- Account management đã có đủ nhánh reset/lock/unlock theo mô tả ở trên
+- Login UI đã có hướng dẫn quên mật khẩu nội bộ dạng toggle (bấm lần nữa để ẩn)
+- AuthenticationController hiện có `log-in`, `log-out`, `change-password`, `introspect`; không có API self-register công khai
+
+### 6. Đồng bộ giao diện và i18n
 
 - Đã đồng bộ đa ngôn ngữ cho login/header/sidebar
 - Đã sửa các text cứng còn sót (title, aria-label, menu label)
 - Đã cập nhật brand text theo ngôn ngữ, gồm cả VI và LAO
 
-### 5. Cập nhật nhận diện
+### 7. Cập nhật nhận diện
 
 - Đã thay logo bằng ảnh chính thức Quy Nhơn University tại login và header
 - Logo favicon cũng dùng cùng bộ nhận diện
@@ -68,7 +97,7 @@ Tuy nhiên, nếu bạn muốn một luồng nghiệp vụ hoàn toàn khép kí
 - Dùng `4451190072` để demo StudentAdmin
 - Dùng `4451190073` để demo Student thường
 
-## 5 tài khoản demo đã chốt
+## 5 tài khoản demo đang dùng (theo môi trường hiện tại)
 
 | STT | Vai trò demo | Username | Password |
 |-----|--------------|----------|----------|
@@ -130,7 +159,7 @@ Chức năng nên demo:
 - Quản lý lớp trong phạm vi khoa
 - Quản lý sinh viên trong phạm vi khoa
 - Quản lý cố vấn học tập trong phạm vi khoa
-- Quản lý role trong phạm vi type DEPARTMENT
+- Quản lý role theo quyền được cấp cho tài khoản DEPARTMENT
 - Xem Activity / Sinh hoạt lớp ở góc nhìn khoa
 
 Các điểm nên nhấn mạnh:
@@ -169,7 +198,7 @@ Password: 4451190072
 Chức năng nên demo:
 - Xem lớp của tôi
 - Xem sinh hoạt lớp
-- Chọn giờ sinh hoạt lớp
+- Chọn giờ sinh hoạt lớp (nếu tài khoản đang có quyền `SET_TIME`)
 - Thao tác điểm danh
 - Ghi biên bản sinh hoạt lớp
 
